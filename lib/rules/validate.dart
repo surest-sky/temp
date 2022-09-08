@@ -33,4 +33,12 @@ class Validate {
 
     return null;
   }
+
+  dynamic validateCode(String? value) {
+    if (value == null || value.isEmpty) {
+      return '请输入验证码';
+    }
+
+    return null;
+  }
 }

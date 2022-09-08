@@ -1,7 +1,11 @@
 import 'package:drop_down_list/model/selected_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:drop_down_list/drop_down_list.dart';
-import './validate.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
+import 'package:tutor_page_h5/rules/validate.dart';
+import 'package:tutor_page_h5/components/verify_button.dart';
+import 'package:tutor_page_h5/http/request.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -13,6 +17,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _areaCodeControlller = TextEditingController(text: '+86');
+  final _phoneControlller = TextEditingController(text: '18270952773');
+  final _passwordControlller = TextEditingController(text: '123456');
+  final _codeControlller = TextEditingController(text: '');
   final _validate = Validate();
   bool _passwordLogin = true;
 
@@ -121,22 +128,24 @@ class _LoginPageState extends State<LoginPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextFormField(
-              controller: _areaCodeControlller,
-              onTap: () {
-                FocusScope.of(context).unfocus();
-                onTextFieldTap();
-              },
-              decoration: const InputDecoration(
-                labelText: '区号',
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.black12,
-                  ),
+            controller: _areaCodeControlller,
+            onTap: () {
+              FocusScope.of(context).unfocus();
+              onTextFieldTap();
+            },
+            decoration: const InputDecoration(
+              labelText: '区号',
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.black12,
                 ),
               ),
-              // The validator receives the text that the user has entered.
-              validator: (value) => _validate.validateAreaCode(value)),
+            ),
+            // The validator receives the text that the user has entered.
+            validator: (value) => _validate.validateAreaCode(value),
+          ),
           TextFormField(
+            controller: _phoneControlller,
             keyboardType: TextInputType.phone,
             decoration: const InputDecoration(
               labelText: '手机号码',
@@ -150,6 +159,19 @@ class _LoginPageState extends State<LoginPage> {
             validator: (value) => _validate.validatePhone(value),
           ),
           _passwordLogin ? _formLoginPassword() : _formLoginVerifycode(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton(
+                child: Text(_passwordLogin ? "验证码登录" : '密码登录'),
+                onPressed: () {
+                  setState(() {
+                    _passwordLogin = !_passwordLogin;
+                  });
+                },
+              )
+            ],
+          ),
           Container(
             width: MediaQuery.of(context).size.width,
             padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -157,11 +179,8 @@ class _LoginPageState extends State<LoginPage> {
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Colors.green),
               ),
-              onPressed: () {
-                // Validate returns true if the form is valid, or false otherwise.
-                if (_formKey.currentState!.validate()) {}
-              },
-              child: const Text('Submit'),
+              onPressed: submitAction,
+              child: const Text('登录'),
             ),
           ),
         ],
@@ -169,38 +188,63 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  Future submitAction() async {
+    // Validate returns true if the form is valid, or false otherwise.
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    final prefs = await SharedPreferences.getInstance();
+    final phone = _phoneControlller.text;
+    final areacode = _areaCodeControlller.text;
+    final password = _passwordControlller.text;
+    final code = _codeControlller.text;
+    final queryParams = {
+      'phone': phone,
+      'country_code': areacode,
+      'password': password,
+      'captcha': code,
+      'mode': _passwordLogin ? "phone" : 'verifyCode',
+    };
+    if (_passwordLogin) {
+      queryParams.remove("captcha");
+    } else {
+      queryParams.remove("password");
+    }
+
+    var responseMap = await loginApi(queryParams);
+    if (responseMap.code == 200) {
+      await prefs.setString("user", json.encode(responseMap.message));
+      Navigator.pushNamed(context, "appPage");
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(responseMap.message)),
+      );
+    }
+  }
+
   Widget _formLoginPassword() {
-    return Row(children: [
-      Expanded(
-        child: TextFormField(
-          obscureText: true,
-          decoration: const InputDecoration(
-            labelText: '密码',
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.black12,
-              ),
-            ),
+    return TextFormField(
+      controller: _passwordControlller,
+      obscureText: true,
+      decoration: const InputDecoration(
+        labelText: '密码',
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.black12,
           ),
-          // The validator receives the text that the user has entered.
-          validator: (value) => _validate.validatePassword(value),
         ),
       ),
-      ElevatedButton(
-        onPressed: () => {
-          setState(() {
-            _passwordLogin = false;
-          })
-        },
-        child: const Text('验证码登录'),
-      ),
-    ]);
+      // The validator receives the text that the user has entered.
+      validator: (value) => _validate.validatePassword(value),
+    );
   }
 
   Widget _formLoginVerifycode() {
     return Row(children: [
       Expanded(
         child: TextFormField(
+          controller: _codeControlller,
           obscureText: true,
           decoration: const InputDecoration(
             labelText: '验证码',
@@ -211,18 +255,10 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           // The validator receives the text that the user has entered.
-          validator: (value) => _validate.validatePassword(value),
+          validator: (value) => _validate.validateCode(value),
         ),
       ),
-      ElevatedButton(
-        style: const ButtonStyle(),
-        onPressed: () => {
-          setState(() {
-            _passwordLogin = true;
-          })
-        },
-        child: const Text('密码登录'),
-      ),
+      VerifyButton(onPressed: () => {}),
     ]);
   }
 
@@ -235,6 +271,9 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void dispose() {
     _areaCodeControlller.dispose();
+    _phoneControlller.dispose();
+    _codeControlller.dispose();
+    _passwordControlller.dispose();
     super.dispose();
   }
 }

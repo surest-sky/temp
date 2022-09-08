@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:tutor_page_h5/view/AppPage.dart';
 import 'package:tutor_page_h5/view/auth/login.dart';
 import 'package:tutor_page_h5/view/auth/register.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
+  SharedPreferences.setMockInitialValues({});
   runApp(const MyApp());
 }
 
@@ -21,19 +24,9 @@ class MyApp extends StatelessWidget {
       routes: {
         'login': (context) => const LoginPage(),
         'register': (context) => const DropDownListExample(),
+        'appPage': (context) => const AppPage(),
       },
       initialRoute: 'login',
-    );
-  }
-}
-
-class AppPage extends StatelessWidget {
-  const AppPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(),
     );
   }
 }
