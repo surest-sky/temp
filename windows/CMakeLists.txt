@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
-project(tutor_page_h5 LANGUAGES CXX)
+project(kwh LANGUAGES CXX)
 
-set(BINARY_NAME "tutor_page_h5")
+set(BINARY_NAME "kwh")
 
 cmake_policy(SET CMP0063 NEW)
 

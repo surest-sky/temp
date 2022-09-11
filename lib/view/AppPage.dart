@@ -1,6 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:proste_indexed_stack/proste_indexed_stack.dart';
-
+import 'package:kwh/services/AuthService.dart';
 import 'CoursePage.dart';
 import 'HomePage.dart';
 import 'ProfilePage.dart';
@@ -13,6 +15,20 @@ class AppPage extends StatefulWidget {
 }
 
 class _AppPageState extends State<AppPage> {
+  _loadInit() async {
+    if (!await AuthService.isLogin()) {
+      Timer.run(() {
+        Navigator.pushNamed(context, "loginPage");
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadInit();
+  }
+
   //底部导航栏数组
   final items = [
     const BottomNavigationBarItem(
@@ -32,7 +48,7 @@ class _AppPageState extends State<AppPage> {
     IndexedStackChild(child: const ProfilePage()),
   ];
 
-  int _currentIndex = 1;
+  int _currentIndex = 0;
 
   //底部导航栏切换
   void _onTap(int index) {

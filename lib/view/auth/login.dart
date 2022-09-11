@@ -1,11 +1,15 @@
 import 'package:drop_down_list/model/selected_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:drop_down_list/drop_down_list.dart';
+import 'package:kwh/models/LoginModel.dart';
+import 'package:kwh/services/AuthService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-import 'package:tutor_page_h5/rules/validate.dart';
-import 'package:tutor_page_h5/components/verify_button.dart';
-import 'package:tutor_page_h5/http/request.dart';
+import 'package:kwh/rules/validate.dart';
+import 'package:kwh/components/verify_button.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import '../../http/apis.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -17,22 +21,24 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _areaCodeControlller = TextEditingController(text: '+86');
-  final _phoneControlller = TextEditingController(text: '18270952773');
-  final _passwordControlller = TextEditingController(text: '123456');
+  final _phoneControlller = TextEditingController(text: '17688762468');
+  final _passwordControlller = TextEditingController(text: '123456789');
   final _codeControlller = TextEditingController(text: '');
+  final _loginController = RoundedLoadingButtonController();
   final _validate = Validate();
   bool _passwordLogin = true;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          tooltip: 'Show Snackbar',
-          onPressed: () {},
-        ),
+        automaticallyImplyLeading: false,
         title: const Text('登录'),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
@@ -59,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               child: const Text(
-                "欢迎来到 TutorPage !!",
+                "斑点熊",
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 25,
@@ -128,23 +134,6 @@ class _LoginPageState extends State<LoginPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextFormField(
-            controller: _areaCodeControlller,
-            onTap: () {
-              FocusScope.of(context).unfocus();
-              onTextFieldTap();
-            },
-            decoration: const InputDecoration(
-              labelText: '区号',
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: Colors.black12,
-                ),
-              ),
-            ),
-            // The validator receives the text that the user has entered.
-            validator: (value) => _validate.validateAreaCode(value),
-          ),
-          TextFormField(
             controller: _phoneControlller,
             keyboardType: TextInputType.phone,
             decoration: const InputDecoration(
@@ -173,54 +162,51 @@ class _LoginPageState extends State<LoginPage> {
             ],
           ),
           Container(
-            width: MediaQuery.of(context).size.width,
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.green),
-              ),
-              onPressed: submitAction,
-              child: const Text('登录'),
-            ),
-          ),
+              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: ElevatedButton(
+                onPressed: submitAction,
+                child: const Text("登录"),
+              )),
         ],
       ),
     );
   }
 
   Future submitAction() async {
-    // Validate returns true if the form is valid, or false otherwise.
     if (!_formKey.currentState!.validate()) {
       return;
     }
 
     final prefs = await SharedPreferences.getInstance();
     final phone = _phoneControlller.text;
-    final areacode = _areaCodeControlller.text;
     final password = _passwordControlller.text;
     final code = _codeControlller.text;
     final queryParams = {
       'phone': phone,
-      'country_code': areacode,
-      'password': password,
-      'captcha': code,
-      'mode': _passwordLogin ? "phone" : 'verifyCode',
+      'email': "",
+      'pw': password,
+      'sms_code': code,
     };
-    if (_passwordLogin) {
-      queryParams.remove("captcha");
-    } else {
-      queryParams.remove("password");
-    }
 
-    var responseMap = await loginApi(queryParams);
-    if (responseMap.code == 200) {
-      await prefs.setString("user", json.encode(responseMap.message));
-      Navigator.pushNamed(context, "appPage");
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(responseMap.message)),
-      );
+    // if (_passwordLogin) {
+    //   queryParams.remove("captcha");
+    // } else {
+    //   queryParams.remove("password");
+    // }
+
+    EasyLoading.show(status: '登录中...');
+    final LoginModel loginResult =
+        await Apis.loginApi(queryParams).whenComplete(() {
+      EasyLoading.dismiss();
+    });
+    if (loginResult.errorMsg.isNotEmpty) {
+      EasyLoading.showError(loginResult.errorMsg);
+      return;
     }
+    await prefs.setString(AuthService.AUTH_KEY, json.encode(loginResult));
+    await prefs.setString(AuthService.AUTH_KEY, loginResult.idkey ?? "");
+    Navigator.pushNamed(context, "appPage");
   }
 
   Widget _formLoginPassword() {
@@ -258,7 +244,10 @@ class _LoginPageState extends State<LoginPage> {
           validator: (value) => _validate.validateCode(value),
         ),
       ),
-      VerifyButton(onPressed: () => {}),
+      SizedBox(
+        width: 100,
+        child: VerifyButton(onPressed: () => {}),
+      )
     ]);
   }
 
@@ -274,6 +263,7 @@ class _LoginPageState extends State<LoginPage> {
     _phoneControlller.dispose();
     _codeControlller.dispose();
     _passwordControlller.dispose();
+    _loginController.stop();
     super.dispose();
   }
 }

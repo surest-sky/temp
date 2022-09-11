@@ -1,10 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:tutor_page_h5/http/response.dart';
-import './response.dart';
+import 'response.dart';
 
-const String baseUrl = "https://api.tutorpage.net/api";
+const String baseUrl = "https://kwh-dev.leolan.top/";
 
-Dio request() {
+Dio http() {
   var request = Dio();
   request.options.baseUrl = baseUrl;
   request.options.connectTimeout = 5000;
@@ -12,12 +11,19 @@ Dio request() {
   return request;
 }
 
-Future<ResponseMap> loginApi(Map<String, String> params) async {
-  try {
-    var responseData = await request().post('/auth/login', data: params);
-    var responseMap = ResponseMap.formJson(responseData.data);
-    return responseMap;
-  } catch (e) {
-    return ResponseMap(403, "Server", {});
+class Request {
+
+  static Future<ResponseMap> post(String url, Map<String, dynamic> params) async {
+    var responseData = await http().post(url, data: params);
+    return _response(responseData.data);
+  }
+
+  static ResponseMap _response(Map<String, dynamic> json) {
+    try {
+      var responseMap = ResponseMap.formJson(json);
+      return responseMap;
+    } catch (e) {
+      return ResponseMap(403, "Server", {});
+    }
   }
 }

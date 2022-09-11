@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:tutor_page_h5/view/AppPage.dart';
-import 'package:tutor_page_h5/view/auth/login.dart';
-import 'package:tutor_page_h5/view/auth/register.dart';
+import 'package:kwh/view/AppPage.dart';
+import 'package:kwh/view/SearchPage.dart';
+import 'package:kwh/view/auth/login.dart';
+import 'package:kwh/view/auth/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:kwh/view/pages/ItemWebViewPage.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+
 
 void main() {
   SharedPreferences.setMockInitialValues({});
+  EasyLoading.instance.indicatorType = EasyLoadingIndicatorType.ring;
   runApp(const MyApp());
 }
 
@@ -22,11 +27,14 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: {
-        'login': (context) => const LoginPage(),
-        'register': (context) => const DropDownListExample(),
+        'loginPage': (context) => const LoginPage(),
+        'registerPage': (context) => const DropDownListExample(),
         'appPage': (context) => const AppPage(),
+        'searchPage': (context) => const SearchPage(),
+        'itemWebViewPage': (context) => const ItemWebViewPage(),
       },
-      initialRoute: 'login',
+      initialRoute: 'appPage',
+      builder: EasyLoading.init(),
     );
   }
 }

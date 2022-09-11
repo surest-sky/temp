@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "tutor_page_h5" "\0"
+            VALUE "FileDescription", "kwh" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "tutor_page_h5" "\0"
+            VALUE "InternalName", "kwh" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2022 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "tutor_page_h5.exe" "\0"
-            VALUE "ProductName", "tutor_page_h5" "\0"
+            VALUE "OriginalFilename", "kwh.exe" "\0"
+            VALUE "ProductName", "kwh" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

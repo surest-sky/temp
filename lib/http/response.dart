@@ -1,12 +1,14 @@
 class ResponseMap {
   late final int code;
+  late final int time;
   late final String message;
-  late final dynamic data;
+  late final Map<String, dynamic> data;
   ResponseMap(this.code, this.message, this.data);
 
   ResponseMap.formJson(Map<String, dynamic> json) {
     code = json['code'] as int;
-    message = json['message'] as String;
+    time = json['time'] as int;
+    message = json['msg'] as String;
     data = json['data'] as dynamic;
   }
 

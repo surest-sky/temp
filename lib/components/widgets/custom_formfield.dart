@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tutor_page_h5/components/widgets/styles/text_styles.dart';
+import 'package:kwh/components/widgets/styles/text_styles.dart';
 
 class CustomFormField extends StatelessWidget {
   final String headingText;

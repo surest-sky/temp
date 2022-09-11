@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:kwh/themes/colors.dart';
+
 
 class VerifyButton extends StatefulWidget {
   final Function onPressed;
@@ -24,15 +26,9 @@ class _VerifyButtonState extends State<VerifyButton> {
     return RoundedLoadingButton(
       controller: _btnController,
       child: Text(verifyCodeText),
-      width: 100,
       height: 40,
-      color: disabled ? Colors.grey.shade400 : null,
-      onPressed: () {
-        if (disabled) {
-          _btnController.stop();
-          return;
-        }
-
+      color: disabled ? Colors.grey.shade400 : Colors.blue,
+      onPressed: disabled ? null : () {
         _btnController.start();
         if (_countdownTime == 0) {
           setState(() {
@@ -41,7 +37,6 @@ class _VerifyButtonState extends State<VerifyButton> {
           });
           startCountdownTimer();
         }
-
         widget.onPressed();
       },
     );
