@@ -1,0 +1,4 @@
+enum ListActionEnum {
+  update,
+  delete,
+}

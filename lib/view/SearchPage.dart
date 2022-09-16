@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:kwh/models/ListItem.dart';
-
 import '../components/home_list_item.dart';
-import '../services/ListService.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:kwh/components/widgets/list_empty.dart';
-import 'package:kwh/components/home_list_show_sheet.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:kwh/mixins/ItemAction.dart';
+import 'package:kwh/enums/ListActionEnum.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -15,8 +13,7 @@ class SearchPage extends StatefulWidget {
   State<SearchPage> createState() => _SearchPageState();
 }
 
-class _SearchPageState extends State<SearchPage> {
-  final service = ListService();
+class _SearchPageState extends State<SearchPage> with ItemAction {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
   final TextEditingController _searchController =
@@ -49,6 +46,28 @@ class _SearchPageState extends State<SearchPage> {
     });
   }
 
+  updateList(ListActionEnum action, ListItem? item) {
+    final List<ListItem> _list = [];
+    if(action == ListActionEnum.delete) {
+      _searchList.forEach((ListItem _item) {
+        if(_item.dataid != item!.dataid) {
+          _list.add(_item);
+        }
+      });
+    }else if(action == ListActionEnum.update) {
+      _searchList.forEach((ListItem _item) {
+        if(_item.dataid == item!.dataid) {
+          _item = item;
+        }
+        _list.add(_item);
+      });
+    }
+
+    setState(() {
+      _searchList = _list;
+    });
+  }
+
   Future _onRefresh() async {
     _search();
   }
@@ -67,17 +86,6 @@ class _SearchPageState extends State<SearchPage> {
     }
   }
 
-  void showButtonSheet(ListItem item) {
-    FocusManager.instance.primaryFocus?.unfocus();
-    showBarModalBottomSheet(
-      expand: true,
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (context) => HomeItemSheet(
-        item: item,
-      ),
-    );
-  }
 
   @override
   void initState() {
@@ -136,7 +144,8 @@ class _SearchPageState extends State<SearchPage> {
                   }
                   return HomeListItem(
                     item: _searchList[index],
-                    showButtonSheet: showButtonSheet,
+                    updateList: updateList,
+                    // callback: updateList,
                   );
                 },
               ),

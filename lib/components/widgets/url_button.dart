@@ -27,7 +27,9 @@ class UrlButton extends StatelessWidget {
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 alignment: Alignment.bottomLeft,
               ),
-              child: Text(item.url),
+              child: Text(item.url, style: const TextStyle(
+                overflow: TextOverflow.ellipsis
+              ),),
             ),
     );
   }

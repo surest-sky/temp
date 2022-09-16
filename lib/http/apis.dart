@@ -74,4 +74,19 @@ class Apis {
     response = await Request.post(url, params);
     return response;
   }
+
+  static Future<ResponseMap> deleteApi(String dataid) async {
+    final String idKey = await AuthService.getAuthKey();
+    final String url = "/v1/data/$idKey";
+    final ResponseMap response;
+    final params = {
+      "action": "del",
+      "dataid": dataid
+    };
+    print("delete: $dataid");
+    print("idKey: $idKey");
+    response = await Request.post(url, params);
+    print(response.toJson());
+    return response;
+  }
 }

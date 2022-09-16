@@ -80,4 +80,8 @@ class ListService {
     params.addAll({"ocr": url});
     return await Apis.submitApi(params);
   }
+
+  Future<ResponseMap> delete(String dataid) async {
+    return await Apis.deleteApi(dataid);
+  }
 }

@@ -14,24 +14,19 @@ Dio http() {
 class Request {
   static Future<ResponseMap> post(
       String url, params) async {
-    print("url: $url");
     try {
       var responseData = await http().post(url, data: params);
       return _response(responseData.data);
     } catch (e) {
-      print(e);
       return ResponseMap(403, "Server", {});
     }
   }
 
   static ResponseMap _response(Map<String, dynamic> json) {
     try {
-      print(json);
       var responseMap = ResponseMap.formJson(json);
-      print(responseMap);
       return responseMap;
     } catch (e) {
-      print(e);
       return ResponseMap(403, "Server", {});
     }
   }
