@@ -1,6 +1,9 @@
 import 'package:flutter/services.dart';
+import 'package:kwh/http/response.dart';
 import 'package:kwh/models/ListItem.dart';
 import 'dart:convert';
+
+import '../http/apis.dart';
 
 class ListService {
   Future<List<ListItem>> getListApi() async {
@@ -33,20 +36,48 @@ class ListService {
     return result;
   }
 
-  Future<List<ListItem>> searchListItem(String keyword) async {
+  Future<List<ListItem>> searchListItem(String keyword, int page) async {
     if (keyword.isEmpty) {
       return [];
     }
-    final List<ListItem> lists = await getListApi();
-    final List<ListItem> result = [];
+    final Map<String, dynamic> params = {
+      "action": "get",
+      "kw": keyword,
+      "page": page,
+      "page_size": 20
+    };
+    final List<ListItem> lists = await Apis.getListApi(params);
+    return lists;
+  }
 
-    lists.forEach((element) {
-      final String title = element.title;
-      if (title.contains(keyword)) {
-        result.add(element);
-      }
-    });
+  Future<List<ListItem>> getLastListItem(int page) async {
+    final Map<String, dynamic> params = {
+      "action": "get",
+      "default": "yes",
+      "page": page,
+      "page_size": 20
+    };
+    final List<ListItem> lists = await Apis.getLastListApi(params);
+    return lists;
+  }
 
-    return result;
+  Future<ResponseMap> submit(String text) async {
+    final Map<String, dynamic> params = {"action": "push"};
+    // 检查是否为url
+    if (text.startsWith("http") || text.startsWith("https")) {
+      params.addAll({"url": text});
+    } else {
+      params.addAll({"text": text});
+    }
+
+    print("submit text");
+    print(params.toString());
+    return await Apis.submitApi(params);
+  }
+
+  Future<ResponseMap> submitOcr(String url) async {
+    final Map<String, dynamic> params = {"action": "push"};
+    params.addAll({"ocr": url});
+    return await Apis.submitApi(params);
   }
 }

@@ -2,7 +2,7 @@ class ResponseMap {
   late final int code;
   late final int time;
   late final String message;
-  late final Map<String, dynamic> data;
+  late final dynamic data;
   ResponseMap(this.code, this.message, this.data);
 
   ResponseMap.formJson(Map<String, dynamic> json) {

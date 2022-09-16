@@ -29,11 +29,6 @@ class _LoginPageState extends State<LoginPage> {
   bool _passwordLogin = true;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -42,17 +37,26 @@ class _LoginPageState extends State<LoginPage> {
         title: const Text('登录'),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
-        shadowColor: Theme.of(context).colorScheme.shadow,
+        shadowColor: Theme
+            .of(context)
+            .colorScheme
+            .shadow,
       ),
       body: Container(
         color: Colors.white,
-        width: MediaQuery.of(context).size.width,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
         alignment: Alignment.topLeft,
         padding: const EdgeInsets.all(10),
         child: Column(
           children: [
             Container(
-              width: MediaQuery.of(context).size.width,
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width,
               margin: const EdgeInsets.only(bottom: 20),
               padding: const EdgeInsets.only(bottom: 20),
               decoration: const BoxDecoration(
@@ -65,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               child: const Text(
-                "斑点熊",
+                "DEMO",
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 25,
@@ -162,12 +166,16 @@ class _LoginPageState extends State<LoginPage> {
             ],
           ),
           Container(
-              width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: ElevatedButton(
-                onPressed: submitAction,
-                child: const Text("登录"),
-              )),
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: ElevatedButton(
+              onPressed: submitAction,
+              child: const Text("登录"),
+            ),
+          ),
         ],
       ),
     );
@@ -188,16 +196,9 @@ class _LoginPageState extends State<LoginPage> {
       'pw': password,
       'sms_code': code,
     };
-
-    // if (_passwordLogin) {
-    //   queryParams.remove("captcha");
-    // } else {
-    //   queryParams.remove("password");
-    // }
-
     EasyLoading.show(status: '登录中...');
     final LoginModel loginResult =
-        await Apis.loginApi(queryParams).whenComplete(() {
+    await Apis.loginApi(queryParams).whenComplete(() {
       EasyLoading.dismiss();
     });
     if (loginResult.errorMsg.isNotEmpty) {

@@ -22,7 +22,7 @@ class _ItemWebViewPageState extends State<ItemWebViewPage> {
 
   _launchUrl(String url) async {
     final Uri _url = Uri.parse(url);
-    if (!await launchUrl(_url)) {
+    if (!await launchUrl(_url, mode: LaunchMode.externalApplication)) {
       EasyLoading.showError("打开链接失败");
     }
   }

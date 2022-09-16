@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:kwh/models/ListItem.dart';
-import 'package:kwh/components/home_list_show_sheet.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:kwh/components/widgets/url_button.dart';
 
 class HomeListItem extends StatelessWidget {
   final ListItem item;
+  final Function showButtonSheet;
+  final Function? actionSheet;
 
-  const HomeListItem({Key? key, required this.item}) : super(key: key);
+  const HomeListItem({
+    Key? key,
+    required this.item,
+    required this.showButtonSheet,
+    this.actionSheet,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => showBarModalBottomSheet(
-        expand: true,
-        context: context,
-        backgroundColor: Colors.transparent,
-        builder: (context) => HomeItemSheet(
-          item: item,
-        ),
-      ),
+      onTap: showButtonSheet(item),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
         padding: const EdgeInsets.only(top: 10, right: 10, left: 10, bottom: 2),
@@ -57,7 +55,25 @@ class HomeListItem extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            UrlButton(item: item),
+            const Padding(padding: EdgeInsets.only(bottom: 10)),
+            Text(
+              item.updatedAt,
+              textAlign: TextAlign.left,
+              style: const TextStyle(color: Colors.black45),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                UrlButton(item: item),
+                actionSheet != null ? SizedBox(
+                  width: 50,
+                  child: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.more_horiz),
+                  ),
+                ): Container()
+              ],
+            )
           ],
         ),
       ),

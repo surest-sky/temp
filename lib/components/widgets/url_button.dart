@@ -9,7 +9,7 @@ class UrlButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String url = item.url.isEmpty ? "" : item.url;
+    final String url = item.url;
     final ItemView itemView = ItemView(title: item.title, url: url);
 
     return Container(

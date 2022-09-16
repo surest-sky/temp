@@ -12,6 +12,7 @@ class AuthService {
 
   static Future<String> getAuthKey() async {
     final prefs = await SharedPreferences.getInstance();
+    // prefs.setString(AUTH_KEY, "你好");
     return prefs.getString(AUTH_KEY) ?? '';
   }
 }

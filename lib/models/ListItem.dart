@@ -9,18 +9,20 @@ class ListItem {
     required this.title,
     required this.fullText,
     required this.updatedAt,
+    this.errorMsg,
   });
 
   ListItem.fromJson(dynamic json) {
-    dataid = json['dataid'];
+    dataid = json['dataid'].toString();
     uId = json['u_id'] ?? "";
     md5 = json['md5'];
-    paas = json['paas'];
+    paas = json['paas'] ?? "";
     url = json['url'];
     type = json['type'];
     title = json['title'];
     fullText = json['full_text'];
-    updatedAt = json['updated_at'];
+    updatedAt = json['updated_at'].toString();
+    errorMsg = json['errorMsg'] ?? "";
   }
 
   late String dataid;
@@ -32,6 +34,7 @@ class ListItem {
   late String title;
   late String fullText;
   late String updatedAt;
+  String? errorMsg;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

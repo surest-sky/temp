@@ -3,58 +3,87 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:proste_indexed_stack/proste_indexed_stack.dart';
 import 'package:kwh/services/AuthService.dart';
-import 'CoursePage.dart';
+import 'AddPage.dart';
 import 'HomePage.dart';
 import 'ProfilePage.dart';
+import 'package:receive_sharing_intent/receive_sharing_intent.dart';
 
 class AppPage extends StatefulWidget {
-  const AppPage({Key? key}) : super(key: key);
+  final Map? arguments;
+
+  const AppPage({Key? key, this.arguments}) : super(key: key);
 
   @override
   State<AppPage> createState() => _AppPageState();
 }
 
 class _AppPageState extends State<AppPage> {
+  int _currentIndex = 0;
+  late StreamSubscription _intentDataStreamSubscription;
+
+  void _toAddPage() {
+    setState(() {
+      _currentIndex = 1;
+    });
+  }
+
   _loadInit() async {
     if (!await AuthService.isLogin()) {
       Timer.run(() {
         Navigator.pushNamed(context, "loginPage");
       });
     }
+    Timer.run(() {
+      ReceiveSharingIntent.getTextStream().listen((String value) {
+        _toAddPage();
+      });
+    });
   }
 
   @override
   void initState() {
     super.initState();
     _loadInit();
+
+    if ((widget.arguments ?? {}).isNotEmpty) {
+      int tapIndex = widget.arguments!["index"] ?? 0;
+
+      print("tapIndex");
+      print(tapIndex);
+
+      setState(() {
+        _currentIndex = tapIndex;
+      });
+    }
   }
 
   //底部导航栏数组
   final items = [
-    const BottomNavigationBarItem(
-        icon: Icon(Icons.home), label: '首页', tooltip: ''),
     // ignore: prefer_const_constructors
-    BottomNavigationBarItem(
-        icon: const Icon(Icons.school), label: '课程管理', tooltip: ''),
+    BottomNavigationBarItem(icon: const Icon(Icons.home), label: '首页'),
     // ignore: prefer_const_constructors
-    BottomNavigationBarItem(
-        icon: const Icon(Icons.person), label: '我的', tooltip: ''),
+    BottomNavigationBarItem(icon: const Icon(Icons.add_circle), label: '添加'),
+    // ignore: prefer_const_constructors
+    BottomNavigationBarItem(icon: const Icon(Icons.person), label: '我的'),
   ];
 
   //底部导航栏页面
   final bodyList = [
     IndexedStackChild(child: const HomePage()),
-    IndexedStackChild(child: const CoursePage()),
+    IndexedStackChild(child: const AddPage()),
     IndexedStackChild(child: const ProfilePage()),
   ];
-
-  int _currentIndex = 0;
 
   //底部导航栏切换
   void _onTap(int index) {
     setState(() {
       _currentIndex = index;
     });
+  }
+
+  void dispose() {
+    _intentDataStreamSubscription.cancel();
+    super.dispose();
   }
 
   @override
