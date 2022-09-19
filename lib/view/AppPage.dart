@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:proste_indexed_stack/proste_indexed_stack.dart';
 import 'package:kwh/services/AuthService.dart';
 import 'AddPage.dart';
@@ -20,11 +21,21 @@ class AppPage extends StatefulWidget {
 class _AppPageState extends State<AppPage> {
   int _currentIndex = 0;
   late StreamSubscription _intentDataStreamSubscription;
+  late StreamSubscription<bool> keyboardSubscription;
 
   void _toAddPage() {
-    FocusManager.instance.primaryFocus?.unfocus();
     setState(() {
       _currentIndex = 1;
+    });
+  }
+
+  _keyboardState() {
+    var keyboardVisibilityController = KeyboardVisibilityController();
+    // Subscribe
+    keyboardSubscription = keyboardVisibilityController.onChange.listen((bool visible) {
+      if(!visible) {
+        FocusManager.instance.primaryFocus?.unfocus();
+      }
     });
   }
 
@@ -45,13 +56,10 @@ class _AppPageState extends State<AppPage> {
   void initState() {
     super.initState();
     _loadInit();
+    _keyboardState();
 
     if ((widget.arguments ?? {}).isNotEmpty) {
       int tapIndex = widget.arguments!["index"] ?? 0;
-
-      print("tapIndex");
-      print(tapIndex);
-
       setState(() {
         _currentIndex = tapIndex;
       });

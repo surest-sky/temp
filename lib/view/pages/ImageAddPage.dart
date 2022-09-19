@@ -8,7 +8,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:kwh/http/apis.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:kwh/models/UploadModel.dart';
 import 'package:kwh/services/ListService.dart';
 
 class ImageAddPage extends StatefulWidget {
@@ -37,18 +36,17 @@ class _ImageAddPageState extends State<ImageAddPage> {
     }
   }
 
-  Future<String> _uploadImage() async {
+  Future<String> uploadImage() async {
     FormData formData = FormData.fromMap({
       "base64_str": _imgBase64
     });
-    final map = await Apis.uploadApi(formData);
+    final map = await Apis.uploadFileApi(formData);
     if (map.code != 200) {
       EasyLoading.showToast("服务器响应超时");
       return "";
     }
 
    return map.data['url'];
-
   }
 
   _submitOcr() async {

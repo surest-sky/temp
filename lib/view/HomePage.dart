@@ -110,7 +110,9 @@ class _ProfilePageState extends State<HomePage> with ItemAction {
 
   _add() {
     setEditItem(
-        null, (ListItem? _item) => {updateList(ListActionEnum.refresh, _item)});
+      null,
+      (ListItem? _item) => {updateList(ListActionEnum.refresh, _item)},
+    );
     return showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -151,8 +153,8 @@ class _ProfilePageState extends State<HomePage> with ItemAction {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("DEMO"),
         automaticallyImplyLeading: false,
+        title: const Text("DEMO2"),
         actions: [
           IconButton(
             onPressed: _pushSearch,

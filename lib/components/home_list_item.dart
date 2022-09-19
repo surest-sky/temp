@@ -28,7 +28,6 @@ class HomeListItem extends StatelessWidget with ItemAction {
   @override
   Widget build(BuildContext context) {
     void showButtonSheet() {
-      FocusManager.instance.primaryFocus?.unfocus();
       showBarModalBottomSheet(
         expand: true,
         context: context,

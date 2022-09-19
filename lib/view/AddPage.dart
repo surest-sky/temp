@@ -23,9 +23,9 @@ class _AddPageState extends State<AddPage> with SingleTickerProviderStateMixin {
   //底部导航栏切换
   void _onTap(int index) {
     setState(() {
-      print(_currentIndex);
       _currentIndex = index;
     });
+    FocusManager.instance.primaryFocus?.unfocus();
   }
 
 

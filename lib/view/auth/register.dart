@@ -217,7 +217,6 @@ class _AppTextFieldState extends State<AppTextField> {
           cursorColor: Colors.black,
           onTap: widget.isCitySelected
               ? () {
-                  FocusScope.of(context).unfocus();
                   onTextFieldTap();
                 }
               : null,

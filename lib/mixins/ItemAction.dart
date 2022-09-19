@@ -20,7 +20,6 @@ mixin ItemAction {
     }
 
     EasyLoading.show(status: "提交中...");
-    FocusManager.instance.primaryFocus?.unfocus();
     if (editItem != null) {
       editItem!.fullText = text;
       await service.update(editItem!.dataid, text);
@@ -99,7 +98,6 @@ mixin ItemAction {
                   TextButton(
                     onPressed: () {
                       Navigator.pop(context);
-                      FocusManager.instance.primaryFocus?.unfocus();
                     },
                     child: const Text(
                       "取消",

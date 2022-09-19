@@ -1,7 +1,10 @@
 import 'package:flutter/services.dart';
 import 'package:kwh/http/response.dart';
 import 'package:kwh/models/ListItem.dart';
+import 'package:kwh/models/LoginUser.dart';
 import 'package:kwh/models/UserConfig.dart';
+import 'package:kwh/services/AuthService.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
 import '../http/apis.dart';
@@ -122,7 +125,33 @@ class ListService {
     if(config.id.isNotEmpty) {
       params['u_id'] = config.uId;
     }
-    print(params);
     return await Apis.submitConfigApi(params);
+  }
+
+  Future<ResponseMap> updateUser(LoginUser user, {bool isUpdateKey = false}) async {
+    final params = {
+      "action": "update",
+      "name": user.name,
+      "avatar": user.avatar,
+    };
+
+    params['email'] = user.email;
+    params['phone'] = user.phone;
+    params['update_idkey'] = isUpdateKey ? "yes" : "no";
+
+    return await Apis.updateUserApi(params);
+  }
+
+  Future<LoginUser> getUser(String phone, ) async {
+    final params = {
+      "action": "get",
+      "phone": phone
+    };
+
+    final response = await Apis.getUserApi(params,);
+    final user = LoginUser.fromJson(response.data);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(AuthService.AUTH_USER, json.encode(user));
+    return user;
   }
 }

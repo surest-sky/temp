@@ -69,6 +69,14 @@ class Apis {
 
   static Future<ResponseMap> uploadApi(FormData params) async {
     final String idKey = await AuthService.getAuthKey();
+    const String url = "/v1/upload_img?key=$key";
+    final ResponseMap response;
+    response = await Request.post(url, params);
+    return response;
+  }
+
+  static Future<ResponseMap> uploadFileApi(FormData params) async {
+    final String idKey = await AuthService.getAuthKey();
     const String url = "/v1/upload_file?key=$key";
     final ResponseMap response;
     response = await Request.post(url, params);
@@ -115,6 +123,23 @@ class Apis {
     final String idKey = await AuthService.getAuthKey();
     params['idkey'] = idKey;
     const String url = "/v1/user_conf";
+    final ResponseMap response;
+    response = await Request.post(url, params);
+    return response;
+  }
+
+
+  static Future<ResponseMap> updateUserApi(params) async {
+    params['key'] = key;
+    const String url = "/v1/users";
+    final ResponseMap response;
+    response = await Request.post(url, params);
+    return response;
+  }
+
+  static Future<ResponseMap> getUserApi(params) async {
+    params['key'] = key;
+    const String url = "/v1/users";
     final ResponseMap response;
     response = await Request.post(url, params);
     return response;

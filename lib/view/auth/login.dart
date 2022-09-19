@@ -1,6 +1,7 @@
 import 'package:drop_down_list/model/selected_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:drop_down_list/drop_down_list.dart';
+import 'package:flutter/services.dart';
 import 'package:kwh/models/LoginUser.dart';
 import 'package:kwh/services/AuthService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -35,12 +36,6 @@ class _LoginPageState extends State<LoginPage> {
         elevation: 0.0,
         automaticallyImplyLeading: false,
         title: const Text('登录'),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        shadowColor: Theme
-            .of(context)
-            .colorScheme
-            .shadow,
       ),
       body: Container(
         color: Colors.white,

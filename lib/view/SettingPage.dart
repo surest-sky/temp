@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:kwh/mixins/ImageAction.dart';
+import 'package:kwh/services/ListService.dart';
 
 import '../models/LoginUser.dart';
 import '../services/AuthService.dart';
@@ -12,8 +14,9 @@ class SettingPage extends StatefulWidget {
   State<SettingPage> createState() => _SettingPageState();
 }
 
-class _SettingPageState extends State<SettingPage> {
+class _SettingPageState extends State<SettingPage> with ImageAction {
   LoginUser _user = LoginUser.fromJson({});
+  final service = ListService();
   final TextEditingController _accountController =
       TextEditingController(text: "");
 
@@ -23,6 +26,50 @@ class _SettingPageState extends State<SettingPage> {
       _user = user ?? LoginUser.fromJson({});
       _accountController.text = _user.name;
     });
+  }
+
+  Future _initUserApi() async {
+    final user = await service.getUser(_user.phone);
+    setState(() {
+      _user = user;
+    });
+  }
+
+  Future _updateAvatar() async {
+    _submitAvatar(String base64, String path) {
+      setState(() {
+        _user.avatar = path;
+      });
+    }
+
+    await imageSelect(complete: _submitAvatar);
+  }
+
+  Future _updateUser() async {
+    String avatar = _user.avatar;
+    EasyLoading.show(status: "更新中");
+    if(!avatar.startsWith("http")) {
+      avatar = await uploadImage();
+      if(avatar.isEmpty) {
+        EasyLoading.dismiss();
+        return;
+      }
+    }
+    _user.avatar = avatar;
+    _user.name = _accountController.text;
+    await service.updateUser(_user);
+    EasyLoading.dismiss();
+    EasyLoading.showToast("更新成功");
+    _initUserApi();
+  }
+
+  // 秘钥重置
+  Future _resetIdKey() async{
+    EasyLoading.show(status: "更新中");
+    await service.updateUser(_user, isUpdateKey: true);
+    EasyLoading.dismiss();
+    EasyLoading.showToast("更新成功");
+    _initUserApi();
   }
 
   @override
@@ -37,13 +84,16 @@ class _SettingPageState extends State<SettingPage> {
       appBar: AppBar(
         title: const Text("设置"),
         actions: [
-          Container(
-            margin: EdgeInsets.only(right: 10),
-            child: const Center(
-              child: Text(
-                "完成",
-                style: TextStyle(
-                  fontSize: 18,
+          InkWell(
+            onTap: _updateUser,
+            child: Container(
+              margin: EdgeInsets.only(right: 10),
+              child: const Center(
+                child: Text(
+                  "保存",
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
                 ),
               ),
             ),
@@ -55,13 +105,21 @@ class _SettingPageState extends State<SettingPage> {
           : Column(
               children: [
                 list(
+                  onTap: () {
+                    _updateAvatar();
+                  },
                   children: [
                     Row(
                       children: [
-                        CircleAvatar(
-                          radius: 20,
-                          backgroundImage: NetworkImage(_user.avatar),
-                        ),
+                        _user.avatar.startsWith("http")
+                            ? CircleAvatar(
+                                radius: 20,
+                                backgroundImage: NetworkImage(_user.avatar),
+                              )
+                            : CircleAvatar(
+                                radius: 20,
+                                backgroundImage: AssetImage(_user.avatar),
+                              ),
                         const Padding(padding: EdgeInsets.only(left: 10)),
                         const Text("头像"),
                       ],
@@ -74,7 +132,7 @@ class _SettingPageState extends State<SettingPage> {
                 list(
                   children: [
                     const SizedBox(
-                      width: 60,
+                      width: 70,
                       child: Text("账号:"),
                     ),
                     Expanded(
@@ -92,7 +150,7 @@ class _SettingPageState extends State<SettingPage> {
                 list(
                   children: [
                     const SizedBox(
-                      width: 60,
+                      width: 70,
                       child: Text("手机号码:"),
                     ),
                     Expanded(
@@ -103,7 +161,7 @@ class _SettingPageState extends State<SettingPage> {
                 list(
                   children: [
                     const SizedBox(
-                      width: 60,
+                      width: 40,
                       child: Text("Key:"),
                     ),
                     Expanded(
@@ -121,13 +179,14 @@ class _SettingPageState extends State<SettingPage> {
                               onPrimary: Colors.white,
                               primary: Colors.grey,
                             ),
-                            onPressed: () {},
+                            onPressed: _resetIdKey,
                             child: const Text("重置"),
                           ),
                           const Padding(padding: EdgeInsets.only(left: 5)),
                           ElevatedButton(
                             onPressed: () {
-                              Clipboard.setData(ClipboardData(text: _user.idkey));
+                              Clipboard.setData(
+                                  ClipboardData(text: _user.idkey));
                               EasyLoading.showToast("复制成功");
                             },
                             child: const Text("复制"),
@@ -139,7 +198,8 @@ class _SettingPageState extends State<SettingPage> {
                 ),
                 Container(
                   width: double.infinity,
-                  margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                   child: ElevatedButton(
                     onPressed: () {
                       AuthService.logout();
@@ -156,7 +216,7 @@ class _SettingPageState extends State<SettingPage> {
     );
   }
 
-  Widget list({required List<Widget> children}) {
+  Widget list({required List<Widget> children, GestureTapCallback? onTap}) {
     return Container(
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.only(left: 10, right: 10, top: 10),
@@ -171,9 +231,12 @@ class _SettingPageState extends State<SettingPage> {
           ),
         ],
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: children,
+      child: InkWell(
+        onTap: onTap,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: children,
+        ),
       ),
     );
   }

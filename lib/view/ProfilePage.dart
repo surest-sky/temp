@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_swipe_action_cell/core/cell.dart';
+import 'package:kwh/components/widgets/list_empty.dart';
 import 'package:kwh/models/LoginUser.dart';
 import 'package:kwh/services/AuthService.dart';
 import 'package:kwh/services/ListService.dart';
@@ -31,6 +32,10 @@ class _ProfilePageState extends State<ProfilePage> {
       _user = user ?? LoginUser.fromJson({});
       _configs = configs;
     });
+
+    if (_user.uId.isEmpty) {
+      Navigator.of(context).pushNamed("loginPage");
+    }
   }
 
   _refresh() {
@@ -118,7 +123,11 @@ class _ProfilePageState extends State<ProfilePage> {
         automaticallyImplyLeading: false,
       ),
       body: _user.uId.isEmpty
-          ? Container()
+          ? ListView(children: const [
+              SizedBox(
+                height: 100,
+              )
+            ])
           : Column(
               children: [
                 // Padding(padding: EdgeInsets.only(top: MediaQueryData.fromWindow(window).padding.top + 20)),
@@ -238,18 +247,25 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           ],
                         ),
-                        Expanded(
-                          child: RefreshIndicator(
-                            key: _refreshIndicatorKey,
-                            onRefresh: _initUser,
-                            child: ListView.builder(
-                              itemCount: _configs.length,
-                              itemBuilder: (context, index) {
-                                return platformItem(_configs[index], index);
-                              },
-                            ),
-                          ),
-                        ),
+                        _configs.length == 0
+                            ? Expanded(
+                                child: ListView(
+                                  children: const [ListEmpty()],
+                                ),
+                              )
+                            : Expanded(
+                                child: RefreshIndicator(
+                                  key: _refreshIndicatorKey,
+                                  onRefresh: _initUser,
+                                  child: ListView.builder(
+                                    itemCount: _configs.length,
+                                    itemBuilder: (context, index) {
+                                      return platformItem(
+                                          _configs[index], index);
+                                    },
+                                  ),
+                                ),
+                              ),
                       ],
                     ),
                   ),

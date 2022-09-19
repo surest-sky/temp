@@ -1,3 +1,5 @@
+import 'package:date_format/date_format.dart';
+
 class ListItem {
   ListItem({
     required this.dataid,
@@ -21,7 +23,7 @@ class ListItem {
     type = json['type'] ?? "";
     title = json['title'] ?? "";
     fullText = json['full_text'] ?? "";
-    updatedAt = json['updated_at'].toString();
+    updatedAt = _convertFormatDate(int.parse(json['updated_at']));
     errorMsg = json['errorMsg'] ?? "";
   }
 
@@ -48,5 +50,10 @@ class ListItem {
     map['full_text'] = fullText;
     map['updated_at'] = updatedAt;
     return map;
+  }
+
+ String _convertFormatDate(int _date) {
+    final _dt = DateTime.fromMillisecondsSinceEpoch(_date * 1000);
+    return formatDate(_dt, [yyyy, '-', mm, '-', dd]);
   }
 }
