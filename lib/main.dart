@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:kwh/services/ShareService.dart';
 import 'package:kwh/view/AppPage.dart';
 import 'package:kwh/view/SearchPage.dart';
+import 'package:kwh/view/SettingPage.dart';
 import 'package:kwh/view/auth/login.dart';
 import 'package:kwh/view/auth/register.dart';
 import 'dart:async';
@@ -24,8 +25,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
-
   @override
   void initState() {
     super.initState();
@@ -37,24 +36,25 @@ class _MyAppState extends State<MyApp> {
       title: 'DEMO',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white, //修改页面的背景
-          //修改AppBar的主体样式
-          appBarTheme: const AppBarTheme(
-            backgroundColor: Colors.lightBlue,
-            elevation: 0, //隐藏AppBar底部的阴影分割线
-            systemOverlayStyle: SystemUiOverlayStyle.light, //设置状态栏的背景
-          ),
-          visualDensity: VisualDensity.standard),
+        scaffoldBackgroundColor: Colors.white, //修改页面的背景
+        //修改AppBar的主体样式
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.lightBlue,
+          elevation: 0, //隐藏AppBar底部的阴影分割线
+          systemOverlayStyle: SystemUiOverlayStyle.light, //设置状态栏的背景
+        ),
+        visualDensity: VisualDensity.standard,
+      ),
       routes: {
         'loginPage': (context) => const LoginPage(),
         'registerPage': (context) => const DropDownListExample(),
         'appPage': (context, {arguments}) => AppPage(arguments: arguments),
         'searchPage': (context) => const SearchPage(),
+        'settingPage': (context) => const SettingPage(),
         'itemWebViewPage': (context) => const ItemWebViewPage(),
       },
       initialRoute: 'appPage',
       builder: EasyLoading.init(),
     );
   }
-
 }

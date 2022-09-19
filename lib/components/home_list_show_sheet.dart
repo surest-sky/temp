@@ -15,8 +15,12 @@ class _HomeItemSheetState extends State<HomeItemSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding:
-            const EdgeInsets.only(top: 20, right: 10, left: 10, bottom: 10),
+        padding: const EdgeInsets.only(
+          top: 20,
+          right: 10,
+          left: 10,
+          bottom: 10,
+        ),
         child: Column(
           // crossAxisAlignment: CrossAxisAlignment.start,
           children: [

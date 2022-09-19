@@ -1,7 +1,7 @@
 import 'package:drop_down_list/model/selected_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:drop_down_list/drop_down_list.dart';
-import 'package:kwh/models/LoginModel.dart';
+import 'package:kwh/models/LoginUser.dart';
 import 'package:kwh/services/AuthService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
@@ -21,8 +21,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _areaCodeControlller = TextEditingController(text: '+86');
-  final _phoneControlller = TextEditingController(text: '17688762468');
-  final _passwordControlller = TextEditingController(text: '123456789');
+  final _phoneControlller = TextEditingController(text: '18270952773');
+  final _passwordControlller = TextEditingController(text: '123456');
   final _codeControlller = TextEditingController(text: '');
   final _loginController = RoundedLoadingButtonController();
   final _validate = Validate();
@@ -197,7 +197,7 @@ class _LoginPageState extends State<LoginPage> {
       'sms_code': code,
     };
     EasyLoading.show(status: '登录中...');
-    final LoginModel loginResult =
+    final LoginUser loginResult =
     await Apis.loginApi(queryParams).whenComplete(() {
       EasyLoading.dismiss();
     });
@@ -205,8 +205,8 @@ class _LoginPageState extends State<LoginPage> {
       EasyLoading.showError(loginResult.errorMsg);
       return;
     }
-    await prefs.setString(AuthService.AUTH_KEY, json.encode(loginResult));
-    await prefs.setString(AuthService.AUTH_KEY, loginResult.idkey ?? "");
+    await prefs.setString(AuthService.AUTH_USER, json.encode(loginResult));
+    await prefs.setString(AuthService.AUTH_KEY, loginResult.idkey);
     Navigator.pushNamed(context, "appPage");
   }
 

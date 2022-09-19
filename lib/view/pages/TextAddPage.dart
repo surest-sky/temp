@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:kwh/services/ListService.dart';
 import 'package:receive_sharing_intent/receive_sharing_intent.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -25,6 +26,34 @@ class _TextAddPageState extends State<TextAddPage> {
     });
   }
 
+  initClipboard() async {
+    String text = Clipboard.getData(Clipboard.kTextPlain) as String;
+    if (text.isEmpty) {
+      return;
+    }
+
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('检测到剪贴板有内容，是否自动填充'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Cancel'),
+            child: const Text('取消'),
+          ),
+          TextButton(
+            onPressed: () {
+              setState((){
+                _textEditingController.text = text;
+              });
+            },
+            child: const Text('确认'),
+          ),
+        ],
+      ),
+    );
+  }
+
   // 文本输入框提交
   void submitText() async {
     final text = _textEditingController.text;
@@ -44,6 +73,7 @@ class _TextAddPageState extends State<TextAddPage> {
   void initState() {
     super.initState();
     _initEditText();
+    initClipboard();
   }
 
   @override

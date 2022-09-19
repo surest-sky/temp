@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:kwh/enums/ListActionEnum.dart';
 import 'package:kwh/models/ListItem.dart';
 import 'package:kwh/components/widgets/url_button.dart';
@@ -39,8 +40,7 @@ class HomeListItem extends StatelessWidget with ItemAction {
     }
 
     _editItem(ListItem item) {
-      setEditItem(item, (ListItem _item) {
-        print(item.fullText);
+      setEditItem(item, (ListItem? _item) {
         updateList(ListActionEnum.update, item);
       });
       return showModalBottomSheet<void>(
@@ -60,6 +60,10 @@ class HomeListItem extends StatelessWidget with ItemAction {
           BottomSheetAction(
             title: _itemAction("编辑", Icons.edit_off),
             onPressed: (context) {
+              if(item.url.isNotEmpty) {
+                EasyLoading.showToast("链接暂时未开发编辑");
+                return;
+              }
               Navigator.pop(context);
               _editItem(item);
             },
@@ -87,16 +91,12 @@ class HomeListItem extends StatelessWidget with ItemAction {
         padding: const EdgeInsets.only(top: 10, right: 10, left: 10, bottom: 2),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(
-            color: Colors.black12,
-            width: 1,
-          ),
           color: Colors.white,
           boxShadow: const [
             BoxShadow(
-                color: Colors.black12,
-                offset: Offset(2, 3), // 偏移量
-                blurRadius: 2),
+              color: Colors.black12,
+              blurRadius: 5.0,
+            ),
           ],
         ),
         child: Column(

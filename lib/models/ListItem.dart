@@ -15,12 +15,12 @@ class ListItem {
   ListItem.fromJson(dynamic json) {
     dataid = json['dataid'].toString();
     uId = json['u_id'] ?? "";
-    md5 = json['md5'];
+    md5 = json['md5'] ?? "";
     paas = json['paas'] ?? "";
-    url = json['url'];
-    type = json['type'];
-    title = json['title'];
-    fullText = json['full_text'];
+    url = json['url'] ?? "";
+    type = json['type'] ?? "";
+    title = json['title'] ?? "";
+    fullText = json['full_text'] ?? "";
     updatedAt = json['updated_at'].toString();
     errorMsg = json['errorMsg'] ?? "";
   }

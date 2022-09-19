@@ -6,10 +6,10 @@ import 'package:kwh/models/ListItem.dart';
 
 mixin ItemAction {
   final TextEditingController _textEditingController =
-      TextEditingController(text: "你好测试");
+      TextEditingController(text: "");
   final service = ListService();
-  late final ListItem editItem;
-  late final Function(ListItem) callback;
+  ListItem? editItem;
+  Function(ListItem?)? callback;
 
   // 文本输入框提交
   void submitText(BuildContext context) async {
@@ -20,9 +20,11 @@ mixin ItemAction {
     }
 
     EasyLoading.show(status: "提交中...");
-    if (editItem.dataid.isNotEmpty) {
-      editItem.fullText = text;
-      callback(editItem);
+    FocusManager.instance.primaryFocus?.unfocus();
+    if (editItem != null) {
+      editItem!.fullText = text;
+      await service.update(editItem!.dataid, text);
+      callback!(editItem);
       EasyLoading.showToast("修改成功");
       Navigator.pop(context);
       return;
@@ -32,6 +34,8 @@ mixin ItemAction {
     EasyLoading.showToast("提交成功");
     _textEditingController.clear();
     EasyLoading.dismiss();
+    callback!(editItem);
+    Navigator.pop(context);
   }
 
   deleteItem(BuildContext context, ListItem item, Function callbackFunc) async {
@@ -62,16 +66,19 @@ mixin ItemAction {
     );
   }
 
-  void setEditItem(ListItem item, Function(ListItem) _callback) {
-    editItem = item;
+  void setEditItem(ListItem? item, Function(ListItem?) _callback) {
+    if (item != null) {
+      editItem = item;
+      _textEditingController.text = item.fullText;
+    }
+
     callback = _callback;
-    _textEditingController.text = item.fullText;
   }
 
   Widget itemAdd(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     return Container(
-      height: height * 0.3,
+      height: height * 0.5,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(10),
@@ -103,7 +110,10 @@ mixin ItemAction {
                     "添加/修改",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  TextButton(onPressed: () => submitText(context), child: const Text("保存"))
+                  TextButton(
+                    onPressed: () => submitText(context),
+                    child: const Text("保存"),
+                  )
                 ],
               ),
             ),

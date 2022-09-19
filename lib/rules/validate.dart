@@ -41,4 +41,12 @@ class Validate {
 
     return null;
   }
+
+  dynamic validateRequired(String? value, {String? label}) {
+    if (value == null || value.isEmpty) {
+      return label ?? "请输入";
+    }
+
+    return null;
+  }
 }

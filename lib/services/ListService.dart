@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:kwh/http/response.dart';
 import 'package:kwh/models/ListItem.dart';
+import 'package:kwh/models/UserConfig.dart';
 import 'dart:convert';
 
 import '../http/apis.dart';
@@ -46,6 +47,7 @@ class ListService {
       "page": page,
       "page_size": 20
     };
+
     final List<ListItem> lists = await Apis.getListApi(params);
     return lists;
   }
@@ -57,6 +59,7 @@ class ListService {
       "page": page,
       "page_size": 20
     };
+
     final List<ListItem> lists = await Apis.getLastListApi(params);
     return lists;
   }
@@ -69,9 +72,6 @@ class ListService {
     } else {
       params.addAll({"text": text});
     }
-
-    print("submit text");
-    print(params.toString());
     return await Apis.submitApi(params);
   }
 
@@ -83,5 +83,46 @@ class ListService {
 
   Future<ResponseMap> delete(String dataid) async {
     return await Apis.deleteApi(dataid);
+  }
+
+  Future<ResponseMap> update(String dataid, String text) async {
+    return await Apis.updateApi(dataid, text);
+  }
+
+  Future<List<UserConfig>> getUserConfig() async {
+    final List<UserConfig> _list = [];
+    final map = await Apis.getUserConfigApi();
+    if(map.code != 200) {
+      return _list;
+    }
+    final listResult = map.data as List<dynamic>;
+    for (var element in listResult) {
+      _list.add(UserConfig.fromJson(element));
+    }
+    return _list;
+  }
+
+  Future<ResponseMap> submitConfig(UserConfig config, {String? action}) async {
+    final params = {
+      "action": config.uId.isNotEmpty ? 'update' : "add",
+      "paas":config.paas,
+      "status": config.status ? 'on' : 'off',
+      "val": config.val,
+      "remark": config.remark,
+      "sessdata": config.sessdata,
+    };
+
+    if(action != null) {
+      params['action'] = action;
+    }
+
+    if(config.id.isNotEmpty) {
+      params['id'] = config.id;
+    }
+    if(config.id.isNotEmpty) {
+      params['u_id'] = config.uId;
+    }
+    print(params);
+    return await Apis.submitConfigApi(params);
   }
 }

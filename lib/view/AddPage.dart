@@ -3,6 +3,7 @@ import 'package:getwidget/getwidget.dart';
 import 'package:proste_indexed_stack/proste_indexed_stack.dart';
 import './pages/TextAddPage.dart';
 import './pages/ImageAddPage.dart';
+import 'package:flutter/services.dart';
 
 class AddPage extends StatefulWidget {
   const AddPage({Key? key}) : super(key: key);
@@ -27,11 +28,15 @@ class _AddPageState extends State<AddPage> with SingleTickerProviderStateMixin {
     });
   }
 
+
   @override
   void initState() {
     super.initState();
-    _tabController =
-        TabController(vsync: this, length: 2, initialIndex: _currentIndex);
+    _tabController = TabController(
+      vsync: this,
+      length: 2,
+      initialIndex: _currentIndex,
+    );
     _tabController.addListener(() {
       _onTap(_tabController.index);
     });

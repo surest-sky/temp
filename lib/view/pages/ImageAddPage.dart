@@ -52,13 +52,13 @@ class _ImageAddPageState extends State<ImageAddPage> {
   }
 
   _submitOcr() async {
+    // EasyLoading.show(status: "图片上传中...");
+    // final String url = await _uploadImage().whenComplete(() => EasyLoading.dismiss());
+    // if(url.isEmpty) {
+    //   return;
+    // }
     EasyLoading.show(status: "图片上传中...");
-    final String url = await _uploadImage().whenComplete(() => EasyLoading.dismiss());
-    if(url.isEmpty) {
-      return;
-    }
-    EasyLoading.show(status: "图片ORC解析中...");
-    final map = await service.submitOcr(url).whenComplete(() => EasyLoading.dismiss());
+    final map = await service.submitOcr(_imgBase64).whenComplete(() => EasyLoading.dismiss());
     if(map.code == 200) {
       EasyLoading.showToast("提交完成");
       setState(() {

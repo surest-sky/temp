@@ -22,6 +22,7 @@ class _AppPageState extends State<AppPage> {
   late StreamSubscription _intentDataStreamSubscription;
 
   void _toAddPage() {
+    FocusManager.instance.primaryFocus?.unfocus();
     setState(() {
       _currentIndex = 1;
     });

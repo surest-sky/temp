@@ -56,10 +56,8 @@ class _ProfilePageState extends State<HomePage> with ItemAction {
   }
 
   _loadList() async {
-    EasyLoading.show(status: '加载中...');
-    final List<ListItem> tempList = await service
-        .getLastListItem(page)
-        .whenComplete(() => EasyLoading.dismiss());
+    _refreshIndicatorKey.currentState!.show();
+    final List<ListItem> tempList = await service.getLastListItem(page);
 
     if (tempList.isEmpty) {
       isNoMore = true;
@@ -77,26 +75,29 @@ class _ProfilePageState extends State<HomePage> with ItemAction {
   }
 
   updateList(ListActionEnum action, ListItem? item) {
-    print(ListActionEnum.update);
     final List<ListItem> _list = [];
-    if(action == ListActionEnum.delete) {
+    if (action == ListActionEnum.delete) {
       lists.forEach((ListItem _item) {
-        if(_item.dataid != item!.dataid) {
+        if (_item.dataid != item!.dataid) {
           _list.add(_item);
         }
       });
-    }else if(action == ListActionEnum.update) {
+      setState(() {
+        lists = _list;
+      });
+    } else if (action == ListActionEnum.update) {
       lists.forEach((ListItem _item) {
-        if(_item.dataid == item!.dataid) {
+        if (_item.dataid == item!.dataid) {
           _item = item;
         }
         _list.add(_item);
       });
+      setState(() {
+        lists = _list;
+      });
+    } else {
+      _onRefresh();
     }
-
-    setState(() {
-      lists = _list;
-    });
   }
 
   Future _loadMore() async {
@@ -108,6 +109,8 @@ class _ProfilePageState extends State<HomePage> with ItemAction {
   }
 
   _add() {
+    setEditItem(
+        null, (ListItem? _item) => {updateList(ListActionEnum.refresh, _item)});
     return showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -167,6 +170,7 @@ class _ProfilePageState extends State<HomePage> with ItemAction {
         child: lists.isEmpty
             ? ListView(children: const [ListEmpty()])
             : ListView.builder(
+                physics: const AlwaysScrollableScrollPhysics(),
                 controller: _scrollController,
                 itemCount: lists.length + 1,
                 itemBuilder: (context, index) {
