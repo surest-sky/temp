@@ -18,7 +18,6 @@ class Request {
       var responseData = await http().post(url, data: params);
       return _response(responseData.data);
     } catch (e) {
-      print(e.toString());
       return ResponseMap(403, "Server", {});
     }
   }

@@ -154,7 +154,7 @@ class _ProfilePageState extends State<HomePage> with ItemAction {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text("DEMO2"),
+        title: const Text("熊啊熊"),
         actions: [
           IconButton(
             onPressed: _pushSearch,

@@ -23,7 +23,7 @@ class ListItem {
     type = json['type'] ?? "";
     title = json['title'] ?? "";
     fullText = json['full_text'] ?? "";
-    updatedAt = _convertFormatDate(int.parse(json['updated_at']));
+    updatedAt = _convertFormatDate(json['updated_at']);
     errorMsg = json['errorMsg'] ?? "";
   }
 
@@ -48,7 +48,7 @@ class ListItem {
     map['type'] = type;
     map['title'] = title;
     map['full_text'] = fullText;
-    map['updated_at'] = updatedAt;
+    map['updated_at'] = DateTime.parse(updatedAt).second;
     return map;
   }
 

@@ -41,7 +41,7 @@ class _HomeItemSheetState extends State<HomeItemSheet> {
             Expanded(
               child: ListView(
                 children: [
-                  Text(
+                  SelectableText(
                     widget.item.fullText,
                     textAlign: TextAlign.left,
                   )

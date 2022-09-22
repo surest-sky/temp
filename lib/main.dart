@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
     }
 
     return MaterialApp(
-      title: 'DEMO',
+      title: '熊啊熊',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white, //修改页面的背景
