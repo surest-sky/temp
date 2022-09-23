@@ -43,6 +43,8 @@ class _ProfilePageState extends State<HomePage> with ItemAction {
   // 从存储中加载List
   _loadListByPrefs() {
     prefs.then((prefs) {
+      _loadList();
+      return;
       final List<String> _lists = prefs.getStringList(prefListKey) ?? [];
       if (_lists.isEmpty) {
         _loadList();

@@ -42,7 +42,7 @@ class _AppPageState extends State<AppPage> {
   _loadInit() async {
     if (!await AuthService.isLogin()) {
       Timer.run(() {
-        Navigator.pushNamed(context, "loginPage");
+        Navigator.pushReplacementNamed(context, "loginPage");
       });
     }
     Timer.run(() {

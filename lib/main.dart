@@ -33,10 +33,13 @@ class MyApp extends StatelessWidget {
       title: '熊啊熊',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white, //修改页面的背景
+        scaffoldBackgroundColor: Color(0XF8F8F8), //修改页面的背景
         //修改AppBar的主体样式
         appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.lightBlue,
+          titleTextStyle: TextStyle(
+              fontSize: 20,
+          ),
+          color: Colors.blueAccent,
           elevation: 0, //隐藏AppBar底部的阴影分割线
           systemOverlayStyle: SystemUiOverlayStyle.light, //设置状态栏的背景
         ),

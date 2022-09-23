@@ -249,8 +249,15 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         _configs.length == 0
                             ? Expanded(
-                                child: ListView(
-                                  children: const [ListEmpty()],
+                                child: RefreshIndicator(
+                                  key: _refreshIndicatorKey,
+                                  onRefresh: _initUser,
+                                  child: ListView.builder(
+                                    itemCount: 1,
+                                    itemBuilder: (context, index) {
+                                      return ListEmpty();
+                                    },
+                                  ),
                                 ),
                               )
                             : Expanded(

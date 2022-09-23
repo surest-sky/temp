@@ -23,7 +23,8 @@ class ListItem {
     type = json['type'] ?? "";
     title = json['title'] ?? "";
     fullText = json['full_text'] ?? "";
-    updatedAt = _convertFormatDate(json['updated_at']);
+    final _updateAt = json['updated_at'];
+    updatedAt = _updateAt is String ? _updateAt : _convertFormatDate(_updateAt);
     errorMsg = json['errorMsg'] ?? "";
   }
 

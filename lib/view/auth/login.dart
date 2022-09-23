@@ -202,7 +202,7 @@ class _LoginPageState extends State<LoginPage> {
     }
     await prefs.setString(AuthService.AUTH_USER, json.encode(loginResult));
     await prefs.setString(AuthService.AUTH_KEY, loginResult.idkey);
-    Navigator.pushNamed(context, "appPage");
+    Navigator.pushReplacementNamed(context, "appPage");
   }
 
   Widget _formLoginPassword() {

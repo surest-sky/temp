@@ -204,7 +204,7 @@ class _PlatformConfigState extends State<PlatformConfig> {
 
   Widget label(String label) {
     return SizedBox(
-      width: 100,
+      width: 110,
       child: Text(
         "$label:",
         style: const TextStyle(
