@@ -75,9 +75,14 @@ class Apis {
     return response;
   }
 
-  static Future<ResponseMap> uploadFileApi(FormData params) async {
+  static Future<ResponseMap> uploadFileApi(String base64) async {
     final String idKey = await AuthService.getAuthKey();
-    const String url = "/v1/upload_file?key=$key";
+    final params = {
+      "idkey": idKey,
+      "key": key,
+      "base64_str": base64
+    };
+    const String url = "/v1/upload_file_to_oss";
     final ResponseMap response;
     response = await Request.post(url, params);
     return response;

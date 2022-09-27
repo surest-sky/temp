@@ -35,7 +35,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
     if (_user.uId.isEmpty) {
       Navigator.of(context).pushNamed("loginPage");
+      return;
     }
+
+    AuthService.saveUser(_user);
   }
 
   _refresh() {

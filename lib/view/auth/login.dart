@@ -64,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               child: const Text(
-                "DEMO",
+                "斑点熊",
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 25,
@@ -200,8 +200,7 @@ class _LoginPageState extends State<LoginPage> {
       EasyLoading.showError(loginResult.errorMsg);
       return;
     }
-    await prefs.setString(AuthService.AUTH_USER, json.encode(loginResult));
-    await prefs.setString(AuthService.AUTH_KEY, loginResult.idkey);
+    AuthService.saveUser(loginResult);
     Navigator.pushReplacementNamed(context, "appPage");
   }
 

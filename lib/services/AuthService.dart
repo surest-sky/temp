@@ -34,4 +34,10 @@ class AuthService {
 
     return LoginUser.fromJson(json.decode(user));
   }
+
+  static Future<void> saveUser(LoginUser user) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString(AuthService.AUTH_USER, json.encode(user));
+    prefs.setString(AuthService.AUTH_KEY, user.idkey);
+  }
 }

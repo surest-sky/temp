@@ -25,7 +25,7 @@ class _ImageAddPageState extends State<ImageAddPage> {
 
   _imageSelect() async {
     final XFile? _tempImage =
-    await _picker.pickImage(source: ImageSource.gallery);
+        await _picker.pickImage(source: ImageSource.gallery);
     if (_tempImage != null) {
       setState(() {
         _imagePath = _tempImage.path;
@@ -37,16 +37,12 @@ class _ImageAddPageState extends State<ImageAddPage> {
   }
 
   Future<String> uploadImage() async {
-    FormData formData = FormData.fromMap({
-      "base64_str": _imgBase64
-    });
-    final map = await Apis.uploadFileApi(formData);
+    final map = await Apis.uploadFileApi(_imgBase64);
     if (map.code != 200) {
       EasyLoading.showToast("服务器响应超时");
       return "";
     }
-
-   return map.data['url'];
+    return map.data['oss_url'];
   }
 
   _submitOcr() async {
@@ -56,13 +52,15 @@ class _ImageAddPageState extends State<ImageAddPage> {
     //   return;
     // }
     EasyLoading.show(status: "图片上传中...");
-    final map = await service.submitOcr(_imgBase64).whenComplete(() => EasyLoading.dismiss());
-    if(map.code == 200) {
+    final map = await service
+        .submitOcr(_imgBase64)
+        .whenComplete(() => EasyLoading.dismiss());
+    if (map.code == 200) {
       EasyLoading.showToast("提交完成");
       setState(() {
         _imagePath = "";
       });
-    }else{
+    } else {
       EasyLoading.showToast("服务器响应超时");
     }
   }
@@ -74,10 +72,7 @@ class _ImageAddPageState extends State<ImageAddPage> {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery
-        .of(context)
-        .size
-        .width;
+    final width = MediaQuery.of(context).size.width;
     return Column(
       children: [
         Container(
@@ -92,18 +87,18 @@ class _ImageAddPageState extends State<ImageAddPage> {
                 height: 250,
                 child: _imagePath.isNotEmpty
                     ? Image.asset(
-                  _imagePath,
-                )
+                        _imagePath,
+                      )
                     : Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(Icons.upload),
-                    Text(
-                      "图片上传",
-                      style: TextStyle(fontSize: 18),
-                    )
-                  ],
-                ),
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Icon(Icons.upload),
+                          Text(
+                            "图片上传",
+                            style: TextStyle(fontSize: 18),
+                          )
+                        ],
+                      ),
               ),
             ),
           ),
@@ -114,7 +109,6 @@ class _ImageAddPageState extends State<ImageAddPage> {
           fullWidthButton: true,
         ),
       ],
-
     );
   }
 }

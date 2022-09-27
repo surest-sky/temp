@@ -154,4 +154,12 @@ class ListService {
     await prefs.setString(AuthService.AUTH_USER, json.encode(user));
     return user;
   }
+
+  Future<ResponseMap> uploadFile(String fileName) async {
+    final params = {
+      "file_name": fileName
+    };
+
+    return await Apis.updateUserApi(params);
+  }
 }

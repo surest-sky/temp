@@ -33,6 +33,7 @@ class _SettingPageState extends State<SettingPage> with ImageAction {
     setState(() {
       _user = user;
     });
+    AuthService.saveUser(user);
   }
 
   Future _updateAvatar() async {
@@ -65,11 +66,29 @@ class _SettingPageState extends State<SettingPage> with ImageAction {
 
   // 秘钥重置
   Future _resetIdKey() async {
-    EasyLoading.show(status: "更新中");
-    await service.updateUser(_user, isUpdateKey: true);
-    EasyLoading.dismiss();
-    EasyLoading.showToast("更新成功");
-    _initUserApi();
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('是否继续重置，重置后将多平台不可使用旧key'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Cancel'),
+            child: const Text('取消'),
+          ),
+          TextButton(
+            onPressed: () async {
+              EasyLoading.show(status: "更新中");
+              await service.updateUser(_user, isUpdateKey: true);
+              EasyLoading.dismiss();
+              EasyLoading.showToast("重置成功");
+              _initUserApi();
+              Navigator.pop(context, 'Cancel');
+            },
+            child: const Text('确认'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -141,25 +160,28 @@ class _SettingPageState extends State<SettingPage> with ImageAction {
                       Row(
                         children: [
                           SizedBox(
-                            width: 70,
-                            child: Text(_user.name),
+                            width: 150,
+                            child: TextField(
+                              controller: _accountController,
+                              textAlign: TextAlign.right,
+                              decoration: const InputDecoration(
+                                isCollapsed: true,
+                                hintText: '请输入...',
+                                contentPadding: EdgeInsets.all(8),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    width: 0,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                           const Icon(
                             Icons.navigate_next,
                           ),
                         ],
                       ),
-
-                      // Expanded(
-                      //   child: TextField(
-                      //     controller: _accountController,
-                      //     decoration: const InputDecoration(
-                      //       isCollapsed: true,
-                      //       hintText: '请输入...',
-                      //       contentPadding: EdgeInsets.all(8),
-                      //     ),
-                      //   ),
-                      // )
                     ],
                   ),
                   BorderTop(),
