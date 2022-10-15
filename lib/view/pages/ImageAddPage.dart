@@ -6,9 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:kwh/enums/NoteType.dart';
 import 'package:kwh/http/apis.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:kwh/services/ListService.dart';
+import 'package:kwh/services/NoteService.dart';
+
+import '../../components/widgets/CustomModule.dart';
 
 class ImageAddPage extends StatefulWidget {
   const ImageAddPage({Key? key}) : super(key: key);
@@ -19,7 +22,7 @@ class ImageAddPage extends StatefulWidget {
 
 class _ImageAddPageState extends State<ImageAddPage> {
   final ImagePicker _picker = ImagePicker();
-  final service = ListService();
+  final service = NoteService();
   String _imagePath = "";
   late String _imgBase64;
 
@@ -73,42 +76,74 @@ class _ImageAddPageState extends State<ImageAddPage> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    return Column(
-      children: [
-        Container(
-          padding: EdgeInsets.all(2),
-          child: DottedBorder(
+    final height = MediaQuery.of(context).size.height * 0.6;
+    return Container(
+      height: height,
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
+        ),
+        color: Colors.white,
+      ),
+      margin: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: Container(
+        padding: const EdgeInsets.only(top: 0, right: 20, left: 20, bottom: 20),
+        child: Column(children: [
+          SizedBox(
+            height: 50,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    "取消",
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ),
+                Text(
+                  CustomModule.noteTitle(NoteType.ocr),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                GFButton(
+                  size: GFSize.SMALL,
+                  onPressed: () => _submitOcr(),
+                  child: const Text("保存"),
+                )
+              ],
+            ),
+          ),
+          DottedBorder(
             color: Colors.black26,
             strokeWidth: 1,
             child: InkWell(
               onTap: _imageSelect,
               child: Container(
                 width: width,
-                height: 250,
+                height: height - 100,
                 child: _imagePath.isNotEmpty
                     ? Image.asset(
-                        _imagePath,
-                      )
+                  _imagePath,
+                )
                     : Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(Icons.upload),
-                          Text(
-                            "图片上传",
-                            style: TextStyle(fontSize: 18),
-                          )
-                        ],
-                      ),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(Icons.upload),
+                    Text(
+                      "图片上传",
+                      style: TextStyle(fontSize: 18),
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-        ),
-        GFButton(
-          onPressed: _submitOcr,
-          text: "提交",
-          fullWidthButton: true,
-        ),
-      ],
+          )
+        ],),
+      ),
     );
   }
 }

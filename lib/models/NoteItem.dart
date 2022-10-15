@@ -1,7 +1,7 @@
 import 'package:date_format/date_format.dart';
 
-class ListItem {
-  ListItem({
+class NoteItem {
+  NoteItem({
     required this.dataid,
     required this.uId,
     required this.md5,
@@ -14,7 +14,7 @@ class ListItem {
     this.errorMsg,
   });
 
-  ListItem.fromJson(dynamic json) {
+  NoteItem.fromJson(dynamic json) {
     dataid = json['dataid'].toString();
     uId = json['u_id'] ?? "";
     md5 = json['md5'] ?? "";

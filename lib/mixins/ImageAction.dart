@@ -26,16 +26,13 @@ mixin ImageAction {
   }
 
   Future<String> uploadImage() async {
-    FormData formData = FormData.fromMap({
-      "base64_str": _imgBase64
-    });
-    final map = await Apis.uploadApi(formData);
+    final map = await Apis.uploadFileApi(_imgBase64);
     if (map.code != 200) {
       EasyLoading.showToast("服务器响应超时");
       return "";
     }
 
-    return map.data['url'];
+    return map.data['oss_url'];
   }
 
   getImagePath() {

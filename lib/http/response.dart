@@ -7,7 +7,7 @@ class ResponseMap {
 
   ResponseMap.formJson(Map<String, dynamic> json) {
     code = json['code'] as int;
-    time = json['time'] as int;
+    time = json['time'] ?? 111 as int;
     message = json['msg'] as String;
     data = json['data'] as dynamic;
   }

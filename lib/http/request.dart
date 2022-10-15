@@ -17,7 +17,9 @@ class Request {
     try {
       var responseData = await http().post(url, data: params);
       return _response(responseData.data);
-    } catch (e) {
+    }on DioError catch (e) {
+      print("error");
+      print(e.response);
       return ResponseMap(403, "Server", {});
     }
   }
@@ -37,6 +39,7 @@ class Request {
       var responseMap = ResponseMap.formJson(json);
       return responseMap;
     } catch (e) {
+      print(e.toString());
       return ResponseMap(403, "Server", {});
     }
   }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:kwh/models/ListItem.dart';
+import 'package:kwh/models/NoteItem.dart';
 import 'package:kwh/models/ItemView.dart';
 
 class UrlButton extends StatelessWidget {
-  final ListItem item;
+  final NoteItem item;
 
   const UrlButton({Key? key, required this.item}) : super(key: key);
 
@@ -27,9 +27,10 @@ class UrlButton extends StatelessWidget {
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 alignment: Alignment.bottomLeft,
               ),
-              child: Text(item.url, style: const TextStyle(
-                overflow: TextOverflow.ellipsis
-              ),),
+              child: Text(
+                item.url,
+                style: const TextStyle(overflow: TextOverflow.ellipsis),
+              ),
             ),
     );
   }

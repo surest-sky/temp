@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class AppColors {
   static const lightsky = Color(0xFFA6C0FF);
@@ -9,4 +10,9 @@ class AppColors {
   static const lightblue = Color(0xFF4B68D1);
   static const blackshade = Color(0xFF555555);
   static const hintText = Color(0xFFC7C7CD);
+  static const skeletonColor = Color(0x00dddfe6);
+  static const AppSliverPrimaryColor = Colors.blue;
+  static const AppSliverPrimaryTitleColor = Colors.white;
+  static const AppBarTitleColor = Colors.white;
+  static const AppBarColor = Colors.blue;
 }

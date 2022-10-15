@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:kwh/services/AuthService.dart';
 
-import '../models/ListItem.dart';
+import '../models/NoteItem.dart';
 import 'request.dart';
 import 'package:kwh/http/response.dart';
 import 'package:kwh/models/LoginUser.dart';
@@ -21,11 +21,11 @@ class Apis {
     return result;
   }
 
-  static Future<List<ListItem>> getListApi(Map<String, dynamic> params) async {
+  static Future<List<NoteItem>> getListApi(Map<String, dynamic> params) async {
     final String idKey = await AuthService.getAuthKey();
     final String url = "/v1/data/$idKey";
     final ResponseMap response;
-    final List<ListItem> result = [];
+    final List<NoteItem> result = [];
     response = await Request.post(url, params);
     if(response.data.isEmpty) {
       return result;
@@ -34,17 +34,17 @@ class Apis {
     final listResult = response.data as List<dynamic>;
     if (response.code == 200) {
       for (var element in listResult) {
-        result.add(ListItem.fromJson(element));
+        result.add(NoteItem.fromJson(element));
       }
     }
     return result;
   }
 
-  static Future<List<ListItem>> getLastListApi(Map<String, dynamic> params) async {
+  static Future<List<NoteItem>> getLastListApi(Map<String, dynamic> params) async {
     final String idKey = await AuthService.getAuthKey();
     final String url = "/v1/data/$idKey";
     final ResponseMap response;
-    final List<ListItem> result = [];
+    final List<NoteItem> result = [];
     response = await Request.post(url, params);
     if(response.data.isEmpty) {
       return result;
@@ -53,7 +53,7 @@ class Apis {
     final listResult = response.data as List<dynamic>;
     if (response.code == 200) {
       for (var element in listResult) {
-        result.add(ListItem.fromJson(element));
+        result.add(NoteItem.fromJson(element));
       }
     }
     return result;
@@ -77,14 +77,14 @@ class Apis {
 
   static Future<ResponseMap> uploadFileApi(String base64) async {
     final String idKey = await AuthService.getAuthKey();
-    final params = {
+    FormData formData = FormData.fromMap({
+      "base64_str": base64,
       "idkey": idKey,
       "key": key,
-      "base64_str": base64
-    };
+    });
     const String url = "/v1/upload_file_to_oss";
     final ResponseMap response;
-    response = await Request.post(url, params);
+    response = await Request.post(url, formData);
     return response;
   }
 
@@ -133,7 +133,6 @@ class Apis {
     return response;
   }
 
-
   static Future<ResponseMap> updateUserApi(params) async {
     params['key'] = key;
     const String url = "/v1/users";
@@ -145,6 +144,41 @@ class Apis {
   static Future<ResponseMap> getUserApi(params) async {
     params['key'] = key;
     const String url = "/v1/users";
+    final ResponseMap response;
+    response = await Request.post(url, params);
+    return response;
+  }
+
+  static Future<ResponseMap> getAllTagsApi() async {
+    final String idKey = await AuthService.getAuthKey();
+    FormData params = FormData.fromMap({
+      "idkey": idKey,
+    });
+    const String url = "/v1/get_user_all_tags";
+    final ResponseMap response;
+    response = await Request.post(url, params);
+    return response;
+  }
+
+  static Future<ResponseMap> getTagListApi(String tag) async {
+    final String idKey = await AuthService.getAuthKey();
+    FormData params = FormData.fromMap({
+      "idkey": idKey,
+      "tag": tag,
+    });
+    const String url = "/v1/search_tag";
+    final ResponseMap response;
+    response = await Request.post(url, params);
+    return response;
+  }
+
+  static Future<ResponseMap> getShowDataApi(String dataId) async {
+    final String idKey = await AuthService.getAuthKey();
+    final params = {
+      "action": "get",
+      "dataid": dataId,
+    };
+    final String url = "/v1/data/$idKey";
     final ResponseMap response;
     response = await Request.post(url, params);
     return response;

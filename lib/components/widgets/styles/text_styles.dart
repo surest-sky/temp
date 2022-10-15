@@ -14,4 +14,10 @@ class KTextStyle {
 
   static const authButtonTextStyle = TextStyle(
       fontSize: 18, fontWeight: FontWeight.w600, color: AppColors.whiteshade);
+
+  static const appSliverTitle = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 20,
+    color: AppColors.AppSliverPrimaryTitleColor,
+  );
 }

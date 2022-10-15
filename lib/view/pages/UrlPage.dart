@@ -5,14 +5,14 @@ import 'package:receive_sharing_intent/receive_sharing_intent.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:getwidget/getwidget.dart';
 
-class TextAddPage extends StatefulWidget {
-  const TextAddPage({Key? key}) : super(key: key);
+class UrlPage extends StatefulWidget {
+  const UrlPage({Key? key}) : super(key: key);
 
   @override
-  State<TextAddPage> createState() => _TextAddPageState();
+  State<UrlPage> createState() => _UrlPageState();
 }
 
-class _TextAddPageState extends State<TextAddPage> {
+class _UrlPageState extends State<UrlPage> {
   final service = NoteService();
   final TextEditingController _textEditingController =
       TextEditingController(text: "");
@@ -63,6 +63,7 @@ class _TextAddPageState extends State<TextAddPage> {
       EasyLoading.showToast("请输入");
       return;
     }
+
     EasyLoading.show(status: "提交中...");
     await service.submit(text);
     EasyLoading.dismiss();
@@ -75,12 +76,12 @@ class _TextAddPageState extends State<TextAddPage> {
   void initState() {
     super.initState();
     _initEditText();
-    initClipboard();
+    // initClipboard();
   }
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height - MediaQuery.of(context).viewInsets.bottom;
+    final height = 600 - MediaQuery.of(context).viewInsets.bottom;
     return Container(
       color: Colors.white,
       padding: EdgeInsets.all(10),
@@ -115,7 +116,7 @@ class _TextAddPageState extends State<TextAddPage> {
             ),
           ),
           const SizedBox(height: 10),
-          SizedBox(
+          Container(
             height: 30,
             child: Row(
               children: [tag("测试"), tag('测试3')],

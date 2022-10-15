@@ -3,7 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:kwh/models/UserConfig.dart';
 import 'package:kwh/rules/validate.dart';
-import 'package:kwh/services/ListService.dart';
+import 'package:kwh/services/NoteService.dart';
 
 class PlatformConfig extends StatefulWidget {
   final UserConfig? config;
@@ -19,7 +19,7 @@ class PlatformConfig extends StatefulWidget {
 class _PlatformConfigState extends State<PlatformConfig> {
   final _formKey = GlobalKey<FormState>();
   final _validate = Validate();
-  final _service = ListService();
+  final _service = NoteService();
   UserConfig _config = UserConfig.fromJson({});
   final List<String> platformList = [
     "github",

@@ -2,13 +2,14 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:kwh/models/ListItem.dart';
-import 'package:kwh/components/home_list_item.dart';
+import 'package:kwh/models/NoteItem.dart';
+import 'package:kwh/components/HomeNoteItem.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:kwh/components/widgets/list_empty.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:kwh/mixins/ItemAction.dart';
 
+import '../components/widgets/CustomWidget.dart';
 import '../enums/ListActionEnum.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,7 +23,7 @@ class _ProfilePageState extends State<HomePage> with ItemAction {
   final prefs = SharedPreferences.getInstance();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
-  List<ListItem> lists = [];
+  List<NoteItem> lists = [];
   late ScrollController _scrollController;
   var page = 1;
   var isLoading = false;
@@ -52,15 +53,14 @@ class _ProfilePageState extends State<HomePage> with ItemAction {
       }
 
       for (var item in _lists) {
-        lists.add(ListItem.fromJson(json.decode(item)));
+        lists.add(NoteItem.fromJson(json.decode(item)));
       }
     });
   }
 
   _loadList() async {
     _refreshIndicatorKey.currentState!.show();
-    final List<ListItem> tempList = await service.getLastListItem(page);
-
+    final List<NoteItem> tempList = await service.getLastNoteItem(page);
     if (tempList.isEmpty) {
       isNoMore = true;
       return;
@@ -76,10 +76,10 @@ class _ProfilePageState extends State<HomePage> with ItemAction {
     });
   }
 
-  updateList(ListActionEnum action, ListItem? item) {
-    final List<ListItem> _list = [];
+  updateList(ListActionEnum action, NoteItem? item) {
+    final List<NoteItem> _list = [];
     if (action == ListActionEnum.delete) {
-      lists.forEach((ListItem _item) {
+      lists.forEach((NoteItem _item) {
         if (_item.dataid != item!.dataid) {
           _list.add(_item);
         }
@@ -88,7 +88,7 @@ class _ProfilePageState extends State<HomePage> with ItemAction {
         lists = _list;
       });
     } else if (action == ListActionEnum.update) {
-      lists.forEach((ListItem _item) {
+      lists.forEach((NoteItem _item) {
         if (_item.dataid == item!.dataid) {
           _item = item;
         }
@@ -113,7 +113,7 @@ class _ProfilePageState extends State<HomePage> with ItemAction {
   _add() {
     setEditItem(
       null,
-      (ListItem? _item) => {updateList(ListActionEnum.refresh, _item)},
+      (NoteItem? _item) => {updateList(ListActionEnum.refresh, _item)},
     );
     return showModalBottomSheet<void>(
       context: context,
@@ -151,42 +151,53 @@ class _ProfilePageState extends State<HomePage> with ItemAction {
     );
   }
 
+  Widget _buildSliverFixedExtentList() {
+    return SliverFixedExtentList(
+      itemExtent: 150,
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          if (index == lists.length) {
+            return _buildProgressMoreIndicator();
+          }
+          return Container(
+            margin: EdgeInsets.only(top: 10),
+            child: HomeNoteItem(
+              item: lists[index],
+              updateList: updateList,
+            ),
+          );
+        },
+        childCount: lists.length + 1,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text("熊啊熊"),
-        actions: [
-          IconButton(
-            onPressed: _pushSearch,
-            icon: const Icon(Icons.search),
-          ),
-          IconButton(
-            onPressed: _add,
-            icon: const Icon(Icons.add),
-          ),
-        ],
-      ),
-      body: RefreshIndicator(
+    return Container(
+      color: Colors.grey.shade100,
+      child: RefreshIndicator(
         key: _refreshIndicatorKey,
+        child: CustomScrollView(
+          slivers: <Widget>[
+            CustomWidget.buildSliverAppBar(
+              "首页",
+              leading: const SizedBox(height: 1),
+              actions: [
+                IconButton(
+                  onPressed: _pushSearch,
+                  icon: const Icon(Icons.search),
+                ),
+                IconButton(
+                  onPressed: _add,
+                  icon: const Icon(Icons.add),
+                ),
+              ],
+            ),
+            _buildSliverFixedExtentList()
+          ],
+        ),
         onRefresh: _onRefresh,
-        child: lists.isEmpty
-            ? ListView(children: const [ListEmpty()])
-            : ListView.builder(
-                physics: const AlwaysScrollableScrollPhysics(),
-                controller: _scrollController,
-                itemCount: lists.length + 1,
-                itemBuilder: (context, index) {
-                  if (index == lists.length) {
-                    return _buildProgressMoreIndicator();
-                  }
-                  return HomeListItem(
-                    item: lists[index],
-                    updateList: updateList,
-                  );
-                },
-              ),
       ),
     );
   }

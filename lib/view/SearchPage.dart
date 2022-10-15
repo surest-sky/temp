@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kwh/models/ListItem.dart';
-import '../components/home_list_item.dart';
+import 'package:kwh/models/NoteItem.dart';
+import '../components/HomeNoteItem.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:kwh/components/widgets/list_empty.dart';
 import 'package:kwh/mixins/ItemAction.dart';
@@ -19,7 +19,7 @@ class _SearchPageState extends State<SearchPage> with ItemAction {
   final TextEditingController _searchController =
       TextEditingController(text: "");
   late ScrollController _scrollController;
-  List<ListItem> _searchList = [];
+  List<NoteItem> _searchList = [];
 
   var page = 1;
   var isLoading = false;
@@ -28,8 +28,8 @@ class _SearchPageState extends State<SearchPage> with ItemAction {
   _search() async {
     final keyword = _searchController.text;
     EasyLoading.show();
-    final List<ListItem> tempList = await service
-        .searchListItem(keyword, page)
+    final List<NoteItem> tempList = await service
+        .searchNoteItem(keyword, page)
         .whenComplete(() => EasyLoading.dismiss());
 
     if (tempList.isEmpty) {
@@ -46,16 +46,16 @@ class _SearchPageState extends State<SearchPage> with ItemAction {
     });
   }
 
-  updateList(ListActionEnum action, ListItem? item) {
-    final List<ListItem> _list = [];
+  updateList(ListActionEnum action, NoteItem? item) {
+    final List<NoteItem> _list = [];
     if(action == ListActionEnum.delete) {
-      _searchList.forEach((ListItem _item) {
+      _searchList.forEach((NoteItem _item) {
         if(_item.dataid != item!.dataid) {
           _list.add(_item);
         }
       });
     }else if(action == ListActionEnum.update) {
-      _searchList.forEach((ListItem _item) {
+      _searchList.forEach((NoteItem _item) {
         if(_item.dataid == item!.dataid) {
           _item = item;
         }
@@ -142,7 +142,7 @@ class _SearchPageState extends State<SearchPage> with ItemAction {
                   if (index == _searchList.length) {
                     return _buildProgressMoreIndicator();
                   }
-                  return HomeListItem(
+                  return HomeNoteItem(
                     item: _searchList[index],
                     updateList: updateList,
                     // callback: updateList,

@@ -6,8 +6,10 @@ import 'package:proste_indexed_stack/proste_indexed_stack.dart';
 import 'package:kwh/services/AuthService.dart';
 import 'AddPage.dart';
 import 'HomePage.dart';
-import 'ProfilePage.dart';
+import 'NewAddPage.dart';
+import 'NewProfilePage.dart';
 import 'package:receive_sharing_intent/receive_sharing_intent.dart';
+import 'package:ripple_backdrop_animate_route/ripple_backdrop_animate_route.dart';
 
 class AppPage extends StatefulWidget {
   final Map? arguments;
@@ -32,8 +34,9 @@ class _AppPageState extends State<AppPage> {
   _keyboardState() {
     var keyboardVisibilityController = KeyboardVisibilityController();
     // Subscribe
-    keyboardSubscription = keyboardVisibilityController.onChange.listen((bool visible) {
-      if(!visible) {
+    keyboardSubscription =
+        keyboardVisibilityController.onChange.listen((bool visible) {
+      if (!visible) {
         FocusManager.instance.primaryFocus?.unfocus();
       }
     });
@@ -79,8 +82,8 @@ class _AppPageState extends State<AppPage> {
   //底部导航栏页面
   final bodyList = [
     IndexedStackChild(child: const HomePage()),
-    IndexedStackChild(child: const AddPage()),
-    IndexedStackChild(child: const ProfilePage()),
+    IndexedStackChild(child: const NewAddPage()),
+    IndexedStackChild(child: const UserProfilePage()),
   ];
 
   //底部导航栏切换
@@ -99,8 +102,12 @@ class _AppPageState extends State<AppPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
+        selectedIconTheme: const IconThemeData(color: Colors.black),
+        selectedLabelStyle: const TextStyle(color: Colors.black),
+        selectedItemColor: Colors.black,
         items: items,
-        currentIndex: _currentIndex, //当前选中标识符
+        currentIndex: _currentIndex,
+        //当前选中标识符
         onTap: _onTap,
         type: BottomNavigationBarType.fixed,
       ),
