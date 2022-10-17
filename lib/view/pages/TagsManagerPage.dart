@@ -3,13 +3,13 @@ import 'package:getwidget/components/typography/gf_typography.dart';
 import 'package:getwidget/types/gf_typography_type.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:kwh/components/Skeleton.dart';
-import 'package:kwh/components/widgets/well_title.dart';
+import 'package:kwh/widgets/well_title.dart';
 import 'package:kwh/models/NoteItem.dart';
 import 'package:kwh/services/NoteService.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../components/HomeItemSheet.dart';
-import '../../components/widgets/well_icon.dart';
+import 'package:kwh/widgets//well_icon.dart';
 import '../../models/TagChunkNoteItem.dart';
 import '../../styles/styles.dart';
 

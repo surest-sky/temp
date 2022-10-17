@@ -2,23 +2,19 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kwh/components/widgets/styles/app_colors.dart';
-import 'package:kwh/components/widgets/styles/text_styles.dart';
-import 'package:kwh/services/ShareService.dart';
+import 'package:kwh/styles/app_colors.dart';
 import 'package:kwh/view/AppPage.dart';
 import 'package:kwh/view/SearchPage.dart';
 import 'package:kwh/view/SettingPage.dart';
 import 'package:kwh/view/ShowPage.dart';
 import 'package:kwh/view/VideoPage.dart';
 import 'package:kwh/view/VipVideoPage.dart';
+import 'package:kwh/view/auth/LoginPage.dart';
 import 'package:kwh/view/auth/login.dart';
 import 'package:kwh/view/auth/register.dart';
-import 'package:kwh/view/example/light.dart';
-import 'dart:async';
 import 'package:kwh/view/pages/ItemWebViewPage.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:kwh/view/pages/SyncConfigPage.dart';
-import 'package:kwh/view/pages/SyncConfigItemPage.dart';
 import 'package:kwh/view/pages/TagPage.dart';
 import 'package:kwh/view/pages/TagsManagerPage.dart';
 
@@ -42,7 +38,7 @@ class MyApp extends StatelessWidget {
       title: '熊啊熊',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        scaffoldBackgroundColor: Colors.grey.shade100, //修改页面的背景
+        scaffoldBackgroundColor: AppColors.appBaseColor, //修改页面的背景
         //修改AppBar的主体样式
         appBarTheme: const AppBarTheme(
           titleTextStyle: TextStyle(
@@ -57,7 +53,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.standard,
       ),
       routes: {
-        'loginPage': (context) => const LoginPage(),
+        'loginPage': (context) => const NewLoginPage(),
         'registerPage': (context) => const DropDownListExample(),
         'appPage': (context, {arguments}) => AppPage(arguments: arguments),
         'searchPage': (context) => const SearchPage(),

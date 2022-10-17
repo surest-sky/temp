@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:kwh/models/NoteItem.dart';
 import 'package:kwh/components/HomeNoteItem.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:kwh/components/widgets/list_empty.dart';
+import 'package:kwh/widgets/list_empty.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:kwh/mixins/ItemAction.dart';
 
-import '../components/widgets/CustomWidget.dart';
+import 'package:kwh/widgets/CustomWidget.dart';
 import '../enums/ListActionEnum.dart';
 
 class HomePage extends StatefulWidget {

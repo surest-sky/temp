@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kwh/components/widgets/styles/app_colors.dart';
-import 'package:kwh/components/widgets/styles/text_styles.dart';
+import 'package:kwh/styles/app_colors.dart';
+import 'package:kwh/styles/text_styles.dart';
 
 class CustomWidget {
   static Widget buildSliverAppBar(String text,

@@ -11,7 +11,7 @@ import 'package:kwh/http/apis.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:kwh/services/NoteService.dart';
 
-import '../../components/widgets/CustomModule.dart';
+import 'package:kwh/widgets//CustomModule.dart';
 
 class ImageAddPage extends StatefulWidget {
   const ImageAddPage({Key? key}) : super(key: key);

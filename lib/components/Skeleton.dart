@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/shimmer/gf_shimmer.dart';
-import 'package:kwh/components/widgets/styles/app_colors.dart';
+import 'package:kwh/styles/app_colors.dart';
 
 class Skeleton extends StatelessWidget {
   final int count;

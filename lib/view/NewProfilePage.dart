@@ -2,10 +2,10 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:easy_refresh/easy_refresh.dart';
-import 'package:kwh/components/widgets/list_item.dart';
+import 'package:kwh/widgets/list_item.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../components/widgets/custom_list_item.dart';
+import 'package:kwh/widgets/custom_list_item.dart';
 import '../models/LoginUser.dart';
 import '../services/AuthService.dart';
 import '../services/NoteService.dart';

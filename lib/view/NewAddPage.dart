@@ -1,18 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:getwidget/getwidget.dart';
 import 'package:kwh/components/NoteAdd.dart';
-import 'package:kwh/components/widgets/CustomWidget.dart';
+import 'package:kwh/widgets/CustomWidget.dart';
 import 'package:kwh/enums/NoteType.dart';
-import 'package:kwh/view/pages/UrlPage.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:proste_indexed_stack/proste_indexed_stack.dart';
-import '../components/widgets/custom_list_item.dart';
-import '../components/widgets/styles/app_colors.dart';
-import '../components/widgets/styles/text_styles.dart';
-import './pages/TextAddPage.dart';
+import 'package:kwh/widgets/custom_list_item.dart';
 import './pages/ImageAddPage.dart';
-import 'package:flutter/services.dart';
 
 class NewAddPage extends StatefulWidget {
   const NewAddPage({Key? key}) : super(key: key);

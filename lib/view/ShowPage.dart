@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:kwh/components/Skeleton.dart';
-import 'package:kwh/components/widgets/CustomWidget.dart';
+import 'package:kwh/widgets/CustomWidget.dart';
 import 'package:kwh/http/response.dart';
 import 'package:kwh/models/NoteItem.dart';
 import 'package:kwh/services/NoteService.dart';

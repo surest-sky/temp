@@ -11,8 +11,10 @@ class AppColors {
   static const blackshade = Color(0xFF555555);
   static const hintText = Color(0xFFC7C7CD);
   static const skeletonColor = Color(0x00dddfe6);
-  static const AppSliverPrimaryColor = Colors.blue;
+  static const AppSliverPrimaryColor = Colors.blueAccent;
   static const AppSliverPrimaryTitleColor = Colors.white;
   static const AppBarTitleColor = Colors.white;
-  static const AppBarColor = Colors.blue;
+  static const AppBarColor = Colors.blueAccent;
+  static Color appBaseColor = Colors.grey.shade100;
+  static Color appPrimaryColor = Colors.blueAccent;
 }

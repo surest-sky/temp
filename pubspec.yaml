@@ -55,6 +55,7 @@ dependencies:
   easy_refresh_space: ^1.0.1
   bottom_navy_bar: ^6.0.0
   ripple_backdrop_animate_route: ^1.1.0
+  material_tag_editor: ^0.1.2
 
 dev_dependencies:
   flutter_test:

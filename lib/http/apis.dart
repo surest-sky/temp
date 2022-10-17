@@ -8,17 +8,12 @@ import 'package:kwh/models/LoginUser.dart';
 
 class Apis {
   static const key = "brAPksDiwycS5Vvf1EToGQu3meYxO8lF";
-  static Future<LoginUser> loginApi(Map<String, dynamic> params) async {
+  static Future<ResponseMap> loginApi(Map<String, dynamic> params) async {
     const String url = "/v1/login";
     final ResponseMap response;
     final LoginUser result;
     response = await Request.post(url, params);
-    if (response.code == 200) {
-      result = LoginUser.fromJson(response.data);
-    } else {
-      result = LoginUser.fromJson({"errorMsg": ""});
-    }
-    return result;
+    return response;
   }
 
   static Future<List<NoteItem>> getListApi(Map<String, dynamic> params) async {
@@ -179,6 +174,18 @@ class Apis {
       "dataid": dataId,
     };
     final String url = "/v1/data/$idKey";
+    final ResponseMap response;
+    response = await Request.post(url, params);
+    return response;
+  }
+
+  static Future<ResponseMap> sendVerifyCode(String phone) async {
+    final params = {
+      "key": key,
+      "action": "phone",
+      "phone": phone,
+    };
+    const String url = "/v1/send_verification_code";
     final ResponseMap response;
     response = await Request.post(url, params);
     return response;

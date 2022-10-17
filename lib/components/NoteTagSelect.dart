@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:getwidget/getwidget.dart';
-import 'package:kwh/components/widgets/CustomStyle.dart';
+import 'package:kwh/widgets/CustomStyle.dart';
 import 'package:material_tag_editor/tag_editor.dart';
 
 import '../services/NoteService.dart';

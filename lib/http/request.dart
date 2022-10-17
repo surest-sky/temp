@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:kwh/services/AuthService.dart';
 import 'response.dart';
 
 const String baseUrl = "https://kwh-dev.leolan.top/";
@@ -8,6 +10,18 @@ Dio http() {
   request.options.baseUrl = baseUrl;
   request.options.connectTimeout = 10000;
   request.options.receiveTimeout = 10000;
+  request.interceptors.add(InterceptorsWrapper(
+    onResponse: (response, handler) {
+      if(response.statusCode != 200) {
+        EasyLoading.showToast("网络错误");
+        return;
+      }
+      final code = response.data['code'] as int;
+      if(code == 401) {
+        AuthService.logout();
+      }
+    }
+  ));
   return request;
 }
 

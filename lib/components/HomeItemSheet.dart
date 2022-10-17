@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:kwh/enums/NoteType.dart';
 import 'package:kwh/models/NoteItem.dart';
-import 'package:kwh/components/widgets/url_button.dart';
+import 'package:kwh/widgets/url_button.dart';
 
 class HomeItemSheet extends StatefulWidget {
   final NoteItem item;

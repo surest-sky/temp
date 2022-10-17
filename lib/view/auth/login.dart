@@ -192,16 +192,17 @@ class _LoginPageState extends State<LoginPage> {
       'sms_code': code,
     };
     EasyLoading.show(status: '登录中...');
-    final LoginUser loginResult =
-    await Apis.loginApi(queryParams).whenComplete(() {
-      EasyLoading.dismiss();
-    });
-    if (loginResult.errorMsg.isNotEmpty) {
-      EasyLoading.showError(loginResult.errorMsg);
-      return;
-    }
-    AuthService.saveUser(loginResult);
-    Navigator.pushReplacementNamed(context, "appPage");
+    // final LoginUser loginResult =
+    // await Apis.loginApi(queryParams).whenComplete(() {
+    //   EasyLoading.dismiss();
+    // });
+    // if (loginResult.errorMsg.isNotEmpty) {
+    //   EasyLoading.showError(loginResult.errorMsg);
+    //   return;
+    // }
+    // AuthService.saveUser(loginResult);
+    // Navigator.pushReplacementNamed(context, "appPage");
+
   }
 
   Widget _formLoginPassword() {
@@ -241,7 +242,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
       SizedBox(
         width: 100,
-        child: VerifyButton(onPressed: () => {}),
+        child: VerifyButton(send: () => {}),
       )
     ]);
   }

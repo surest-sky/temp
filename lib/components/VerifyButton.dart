@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:kwh/themes/colors.dart';
 
-
 class VerifyButton extends StatefulWidget {
-  final Function onPressed;
-  const VerifyButton({Key? key, required this.onPressed}) : super(key: key);
+  final Function send;
+
+  const VerifyButton({Key? key, required this.send}) : super(key: key);
 
   @override
   State<VerifyButton> createState() => _VerifyButtonState();
@@ -28,17 +28,21 @@ class _VerifyButtonState extends State<VerifyButton> {
       child: Text(verifyCodeText),
       height: 40,
       color: disabled ? Colors.grey.shade400 : Colors.blue,
-      onPressed: disabled ? null : () {
-        _btnController.start();
-        if (_countdownTime == 0) {
-          setState(() {
-            _countdownTime = 5;
-            disabled = true;
-          });
-          startCountdownTimer();
-        }
-        widget.onPressed();
-      },
+      onPressed: disabled
+          ? null
+          : () async {
+              final isSuccess = await widget.send();
+              if (isSuccess) {
+                _btnController.start();
+                if (_countdownTime == 0) {
+                  setState(() {
+                    _countdownTime = 5;
+                    disabled = true;
+                  });
+                  startCountdownTimer();
+                }
+              }
+            },
     );
   }
 

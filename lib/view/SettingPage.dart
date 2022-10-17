@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:kwh/styles/app_colors.dart';
 import 'package:kwh/mixins/ImageAction.dart';
 import 'package:kwh/services/NoteService.dart';
+import 'package:kwh/view/auth/login.dart';
 
 import '../models/LoginUser.dart';
 import '../services/AuthService.dart';
 import 'package:flutter/services.dart';
+
+import 'auth/LoginPage.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({Key? key}) : super(key: key);
@@ -123,153 +127,154 @@ class _SettingPageState extends State<SettingPage> with ImageAction {
           ? Container()
           : RefreshIndicator(
               onRefresh: _initUser,
-              child: Container(
-                color: Colors.grey.shade200,
-                child: Column(
-                  children: [
-                    list(
-                      onTap: () {
-                        _updateAvatar();
+              child: Column(
+                children: [
+                  list(
+                    onTap: () {
+                      _updateAvatar();
+                    },
+                    children: [
+                      const Text("头像"),
+                      Row(
+                        children: [
+                          _user.avatar.startsWith("http")
+                              ? CircleAvatar(
+                                  radius: 20,
+                                  backgroundImage: NetworkImage(_user.avatar),
+                                )
+                              : CircleAvatar(
+                                  radius: 20,
+                                  backgroundImage: AssetImage(_user.avatar),
+                                ),
+                          const Padding(padding: EdgeInsets.only(left: 10)),
+                          const Icon(
+                            Icons.navigate_next,
+                            color: Colors.grey,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  BorderTop(),
+                  list(
+                    children: [
+                      const SizedBox(
+                        width: 70,
+                        child: Text("账号"),
+                      ),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 150,
+                            child: TextField(
+                              controller: _accountController,
+                              textAlign: TextAlign.right,
+                              decoration: const InputDecoration(
+                                isCollapsed: true,
+                                hintText: '请输入...',
+                                contentPadding: EdgeInsets.all(8),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    width: 0,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const Icon(
+                            Icons.navigate_next,
+                            color: Colors.grey,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  BorderTop(),
+                  list(
+                    children: [
+                      const SizedBox(
+                        width: 70,
+                        child: Text("手机号码"),
+                      ),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 100,
+                            child: Text(_user.phone),
+                          ),
+                          const Icon(
+                            Icons.navigate_next,
+                            color: Colors.grey,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  list(
+                    children: [
+                      const SizedBox(
+                        width: 30,
+                        child: Text("Api"),
+                      ),
+                      Expanded(
+                        child: SizedBox(
+                          width: 40,
+                          child: Text(_user.idkey),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 135,
+                        child: Row(
+                          children: [
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                onPrimary: Colors.white,
+                                primary: Colors.grey,
+                              ),
+                              onPressed: _resetIdKey,
+                              child: const Text("重置"),
+                            ),
+                            const Padding(padding: EdgeInsets.only(left: 5)),
+                            ElevatedButton(
+                              onPressed: () {
+                                Clipboard.setData(
+                                  ClipboardData(text: _user.idkey),
+                                );
+                                EasyLoading.showToast("复制成功");
+                              },
+                              child: const Text("复制"),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    width: double.infinity,
+                    margin: const EdgeInsets.symmetric(
+                      vertical: 20,
+                      horizontal: 10,
+                    ),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        AuthService.logout();
+                        // Navigator.pushNamed(context, "loginPage");
+                        Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (context) => const NewLoginPage()),
+                          (Route<dynamic> route) => false,
+                        );
                       },
-                      children: [
-                        const Text("头像"),
-                        Row(
-                          children: [
-                            _user.avatar.startsWith("http")
-                                ? CircleAvatar(
-                                    radius: 20,
-                                    backgroundImage: NetworkImage(_user.avatar),
-                                  )
-                                : CircleAvatar(
-                                    radius: 20,
-                                    backgroundImage: AssetImage(_user.avatar),
-                                  ),
-                            const Padding(padding: EdgeInsets.only(left: 10)),
-                            const Icon(
-                              Icons.navigate_next,
-                              color: Colors.grey,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    BorderTop(),
-                    list(
-                      children: [
-                        const SizedBox(
-                          width: 70,
-                          child: Text("账号"),
-                        ),
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 150,
-                              child: TextField(
-                                controller: _accountController,
-                                textAlign: TextAlign.right,
-                                decoration: const InputDecoration(
-                                  isCollapsed: true,
-                                  hintText: '请输入...',
-                                  contentPadding: EdgeInsets.all(8),
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 0,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const Icon(
-                              Icons.navigate_next,
-                              color: Colors.grey,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    BorderTop(),
-                    list(
-                      children: [
-                        const SizedBox(
-                          width: 70,
-                          child: Text("手机号码"),
-                        ),
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 100,
-                              child: Text(_user.phone),
-                            ),
-                            const Icon(
-                              Icons.navigate_next,
-                              color: Colors.grey,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    list(
-                      children: [
-                        const SizedBox(
-                          width: 30,
-                          child: Text("Api"),
-                        ),
-                        Expanded(
-                          child: SizedBox(
-                            width: 40,
-                            child: Text(_user.idkey),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 135,
-                          child: Row(
-                            children: [
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  onPrimary: Colors.white,
-                                  primary: Colors.grey,
-                                ),
-                                onPressed: _resetIdKey,
-                                child: const Text("重置"),
-                              ),
-                              const Padding(padding: EdgeInsets.only(left: 5)),
-                              ElevatedButton(
-                                onPressed: () {
-                                  Clipboard.setData(
-                                    ClipboardData(text: _user.idkey),
-                                  );
-                                  EasyLoading.showToast("复制成功");
-                                },
-                                child: const Text("复制"),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      width: double.infinity,
-                      margin: const EdgeInsets.symmetric(
-                        vertical: 20,
-                        horizontal: 10,
-                      ),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          AuthService.logout();
-                          Navigator.pushNamed(context, "loginPage");
-                        },
-                        child: const Text("退出登录"),
-                        style: ElevatedButton.styleFrom(
-                          fixedSize: const Size(double.infinity, 40),
-                        ),
+                      child: const Text("退出登录"),
+                      style: ElevatedButton.styleFrom(
+                        fixedSize: const Size(double.infinity, 40),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
     );
@@ -304,7 +309,7 @@ class _SettingPageState extends State<SettingPage> with ImageAction {
       decoration: BoxDecoration(
         border: Border(
           top: BorderSide(
-            color: Colors.grey.shade300,
+            color: AppColors.appBaseColor,
             width: width,
             style: BorderStyle.solid,
           ),

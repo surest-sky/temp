@@ -3,7 +3,7 @@ import 'package:kwh/models/LoginUser.dart';
 import 'package:kwh/services/AuthService.dart';
 import 'package:kwh/services/NoteService.dart';
 
-import '../components/widgets/list_item.dart';
+import 'package:kwh/widgets/list_item.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -43,6 +43,7 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         title: const Text("我的"),
         automaticallyImplyLeading: false,
+        leading: const SizedBox(child: Text(""),),
       ),
       body: _user.uId.isEmpty
           ? ListView(children: const [

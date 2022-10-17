@@ -4,7 +4,7 @@ import 'package:kwh/components/HomeNoteItem.dart';
 import 'package:kwh/components/Skeleton.dart';
 import 'package:kwh/models/NoteItem.dart';
 
-import '../../components/widgets/CustomWidget.dart';
+import 'package:kwh/widgets//CustomWidget.dart';
 import '../../services/NoteService.dart';
 
 class TagPage extends StatefulWidget {

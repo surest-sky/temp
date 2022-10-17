@@ -22,7 +22,6 @@ class AppPage extends StatefulWidget {
 
 class _AppPageState extends State<AppPage> {
   int _currentIndex = 0;
-  late StreamSubscription _intentDataStreamSubscription;
   late StreamSubscription<bool> keyboardSubscription;
 
   void _toAddPage() {
@@ -94,7 +93,6 @@ class _AppPageState extends State<AppPage> {
   }
 
   void dispose() {
-    _intentDataStreamSubscription.cancel();
     super.dispose();
   }
 

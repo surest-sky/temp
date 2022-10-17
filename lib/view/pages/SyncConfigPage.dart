@@ -3,7 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_swipe_action_cell/core/cell.dart';
 
 import '../../components/PlatformConfig.dart';
-import '../../components/widgets/list_empty.dart';
+import 'package:kwh/widgets//list_empty.dart';
 import '../../models/LoginUser.dart';
 import '../../models/UserConfig.dart';
 import '../../services/AuthService.dart';

@@ -1,7 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:kwh/components/widgets/styles/app_colors.dart';
-import 'package:kwh/components/widgets/styles/text_styles.dart';
-
 import '../../enums/NoteType.dart';
 
 class CustomModule {
