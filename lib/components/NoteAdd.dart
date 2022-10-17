@@ -23,14 +23,32 @@ class NoteAdd extends StatefulWidget {
 class _NoteAddState extends State<NoteAdd> {
   final TextEditingController _textEditingController =
       TextEditingController(text: "");
+  final TextEditingController _remarkEditingController =
+      TextEditingController(text: "");
   final service = NoteService();
+  List<String> tags = [];
+
+  loadData() {
+    if(widget.editItem == null) return;
+    setState(() {
+      _textEditingController.text = widget.editItem?.fullText ?? "";
+      _remarkEditingController.text = widget.editItem?.remark ?? "";
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print(widget.editItem);
+  }
 
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Container(
-      height: height * 0.6,
+      height: height * 0.5,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(10),
@@ -93,6 +111,7 @@ class _NoteAddState extends State<NoteAdd> {
               margin: const EdgeInsets.only(top: 10),
               height: 60,
               child: TextField(
+                controller: _remarkEditingController,
                 decoration: CustomStyle.getTextFieldDecoration('备注[可选]'),
               ),
             ),
@@ -104,7 +123,8 @@ class _NoteAddState extends State<NoteAdd> {
               width: width,
               padding: const EdgeInsets.only(top: 10),
               child: NoteTagEdit(
-                tags: [],
+                tags: widget.editItem?.tags ?? [],
+                complete: (_tags) => tags = _tags,
               ),
             )
           ],
@@ -136,7 +156,7 @@ class _NoteAddState extends State<NoteAdd> {
       return;
     }
 
-    await service.submit(text, type: widget.type);
+    await service.submit(text, type: widget.type, tags: tags, remark: widget.editItem?.remark ?? "");
     EasyLoading.showToast("提交成功");
     _textEditingController.clear();
     EasyLoading.dismiss();

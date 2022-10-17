@@ -41,7 +41,6 @@ class _ShowPageState extends State<ShowPage> {
       return;
     }
 
-    print(responseMap.data);
     setState(() {
       item = NoteItem.fromJson(responseMap.data[0]);
       loading = false;
@@ -58,7 +57,7 @@ class _ShowPageState extends State<ShowPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("文章详情"),
+        title: const Text("详情"),
         actions: [_buildPopupMenuButton(context)],
       ),
       body: loading

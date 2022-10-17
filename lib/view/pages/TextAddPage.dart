@@ -64,7 +64,7 @@ class _TextAddPageState extends State<TextAddPage> {
       return;
     }
     EasyLoading.show(status: "提交中...");
-    await service.submit(text);
+    await service.submit(text, tags: [], remark: '');
     EasyLoading.dismiss();
     EasyLoading.showToast("提交成功");
 

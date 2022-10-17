@@ -9,6 +9,8 @@ import 'package:kwh/view/AppPage.dart';
 import 'package:kwh/view/SearchPage.dart';
 import 'package:kwh/view/SettingPage.dart';
 import 'package:kwh/view/ShowPage.dart';
+import 'package:kwh/view/VideoPage.dart';
+import 'package:kwh/view/VipVideoPage.dart';
 import 'package:kwh/view/auth/login.dart';
 import 'package:kwh/view/auth/register.dart';
 import 'package:kwh/view/example/light.dart';
@@ -43,7 +45,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.grey.shade100, //修改页面的背景
         //修改AppBar的主体样式
         appBarTheme: const AppBarTheme(
-          titleTextStyle:  TextStyle(
+          titleTextStyle: TextStyle(
             fontWeight: FontWeight.w500,
             fontSize: 20,
             color: AppColors.AppBarTitleColor,
@@ -63,10 +65,13 @@ class MyApp extends StatelessWidget {
         'itemWebViewPage': (context) => const ItemWebViewPage(),
         'syncConfigPage': (context) => const SyncConfigPage(),
         'tagsManagerPage': (context) => const TagsManagerPage(),
+        'videoPage': (context) => const VideoPage(),
         'tagPage': (context) =>
             TagPage(tag: ModalRoute.of(context)!.settings.arguments as String),
-        'showPage': (context) =>
-            ShowPage(dataId: ModalRoute.of(context)!.settings.arguments as String),
+        'vipVideoPage': (context) => VipVideoPage(
+            url: ModalRoute.of(context)!.settings.arguments as String),
+        'showPage': (context) => ShowPage(
+            dataId: ModalRoute.of(context)!.settings.arguments as String),
       },
       initialRoute: 'appPage',
       builder: EasyLoading.init(),

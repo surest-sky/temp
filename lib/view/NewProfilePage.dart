@@ -152,6 +152,14 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         Navigator.of(context).pushNamed("syncConfigPage");
                       },
                     ),
+                    CustomListItem(
+                      leading: const Icon(Icons.video_call_rounded),
+                      trailing: const Icon(Icons.navigate_next),
+                      title: '播放管理',
+                      onTap: () {
+                        Navigator.of(context).pushNamed("videoPage");
+                      },
+                    ),
                   ],
                 ),
               ),

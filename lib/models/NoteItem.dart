@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:date_format/date_format.dart';
 
 class NoteItem {
@@ -7,22 +9,27 @@ class NoteItem {
     required this.md5,
     required this.paas,
     required this.url,
+    required this.tags,
     required this.type,
     required this.title,
     required this.fullText,
+    required this.remark,
     required this.updatedAt,
     this.errorMsg,
   });
 
   NoteItem.fromJson(dynamic json) {
+    print(jsonEncode(json));
     dataid = json['dataid'].toString();
     uId = json['u_id'] ?? "";
     md5 = json['md5'] ?? "";
     paas = json['paas'] ?? "";
     url = json['url'] ?? "";
     type = json['type'] ?? "";
+    tags = [];
     title = json['title'] ?? "";
     fullText = json['full_text'] ?? "";
+    remark = json['remark'] ?? "";
     final _updateAt = json['updated_at'];
     updatedAt = _updateAt is String ? _updateAt : _convertFormatDate(_updateAt);
     errorMsg = json['errorMsg'] ?? "";
@@ -37,6 +44,8 @@ class NoteItem {
   late String title;
   late String fullText;
   late String updatedAt;
+  late String remark;
+  late List<String> tags;
   String? errorMsg;
 
   Map<String, dynamic> toJson() {
@@ -48,6 +57,7 @@ class NoteItem {
     map['url'] = url;
     map['type'] = type;
     map['title'] = title;
+    map['tags'] = jsonEncode(tags);
     map['full_text'] = fullText;
     map['updated_at'] = DateTime.parse(updatedAt).second;
     return map;

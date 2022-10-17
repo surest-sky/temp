@@ -65,7 +65,7 @@ class _UrlPageState extends State<UrlPage> {
     }
 
     EasyLoading.show(status: "提交中...");
-    await service.submit(text);
+    await service.submit(text, tags: [], remark: '');
     EasyLoading.dismiss();
     EasyLoading.showToast("提交成功");
 

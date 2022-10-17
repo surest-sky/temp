@@ -76,7 +76,7 @@ class _ImageAddPageState extends State<ImageAddPage> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height * 0.6;
+    final height = MediaQuery.of(context).size.height * 0.5;
     return Container(
       height: height,
       decoration: const BoxDecoration(
