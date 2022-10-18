@@ -13,14 +13,14 @@ import '../../models/LoginUser.dart';
 import '../../rules/validate.dart';
 import '../../services/AuthService.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+class ForgetPassword extends StatefulWidget {
+  const ForgetPassword({Key? key}) : super(key: key);
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<ForgetPassword> createState() => _ForgetPasswordState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _ForgetPasswordState extends State<ForgetPassword> {
   final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -56,7 +56,7 @@ class _RegisterPageState extends State<RegisterPage> {
             width: MediaQuery.of(context).size.width,
           ),
           CustomHeader(
-            text: '注册',
+            text: '忘记密码',
             onTap: () {
               Navigator.pushReplacement(
                 context,
@@ -94,20 +94,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     // const SizedBox(
                     //   height: 16,
                     // ),
-                    CustomFormField(
-                      headingText: "用户名称",
-                      hintText: "请输入用户名称",
-                      obsecureText: false,
-                      suffixIcon: const SizedBox(),
-                      maxLines: 1,
-                      textInputAction: TextInputAction.done,
-                      textInputType: TextInputType.text,
-                      controller: _nameController,
-                      validator: (value) => _validate.validateName(value),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
                     CustomFormField(
                       headingText: "手机号码",
                       hintText: "请输入手机号码",
@@ -156,11 +142,11 @@ class _RegisterPageState extends State<RegisterPage> {
                       height: 16,
                     ),
                     AuthButton(
-                      onTap: _registerAction,
-                      text: '注册',
+                      onTap: _resetAction,
+                      text: '确认',
                     ),
                     CustomRichText(
-                      discription: '已经有帐户了吗？',
+                      discription: '',
                       text: '点这里登录',
                       onTap: () {
                         Navigator.pushReplacement(
@@ -227,7 +213,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  _registerAction() async {
+  _resetAction() async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -239,25 +225,24 @@ class _RegisterPageState extends State<RegisterPage> {
     }
 
     final queryParams = {
-      'name': name,
       'phone': phone,
-      'email': "",
       'pw': password,
       'sms_code': verifyCode,
     };
-    EasyLoading.show(status: '请稍后...');
 
-    final response = await Apis.registerApi(queryParams).whenComplete(() {
+    EasyLoading.show(status: '请稍后...');
+    final response = await Apis.resetPasswordApi(queryParams).whenComplete(() {
       EasyLoading.dismiss();
     });
     if (response.code != 200) {
       EasyLoading.showError(response.message);
       return;
     }
-    EasyLoading.showToast('注册成功...');
+
+    EasyLoading.showToast('重置密码成功, 请登录...');
     final loginResult = LoginUser.fromJson(response.data);
     await AuthService.saveUser(loginResult);
-    Navigator.pushReplacementNamed(context, "appPage");
+    Navigator.pushReplacementNamed(context, "loginPage");
   }
 
   @override

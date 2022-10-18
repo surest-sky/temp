@@ -27,7 +27,6 @@ class _ShowPageState extends State<ShowPage> {
   bool loading = true;
 
   Future _loadData() async {
-    print(widget.dataId);
     final ResponseMap responseMap = await service.getShowData(widget.dataId);
     if (responseMap.code != 200) {
       EasyLoading.showToast("数据不存在");

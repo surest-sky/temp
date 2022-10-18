@@ -19,7 +19,6 @@ class NoteItem {
   });
 
   NoteItem.fromJson(dynamic json) {
-    print(jsonEncode(json));
     dataid = json['dataid'].toString();
     uId = json['u_id'] ?? "";
     md5 = json['md5'] ?? "";

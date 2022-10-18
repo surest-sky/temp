@@ -5,8 +5,9 @@ import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class VerifyButton extends StatefulWidget {
   final Function send;
+  final String text;
 
-  const VerifyButton({Key? key, required this.send}) : super(key: key);
+  const VerifyButton({Key? key, required this.send, required this.text}) : super(key: key);
 
   @override
   State<VerifyButton> createState() => _VerifyButtonState();
@@ -18,8 +19,16 @@ class _VerifyButtonState extends State<VerifyButton> {
   late Timer _timer;
   int _countdownTime = 0;
   bool disabled = false;
-  String verifyCodeText = "验证码登录";
+  String verifyCodeText = "";
   bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      verifyCodeText = widget.text;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,9 +73,9 @@ class _VerifyButtonState extends State<VerifyButton> {
 
   @override
   void dispose() {
-    super.dispose();
     if (_timer != null) {
       _timer.cancel();
     }
+    super.dispose();
   }
 }

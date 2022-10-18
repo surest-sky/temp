@@ -15,12 +15,13 @@ Dio http() {
     onResponse: (response, handler) {
       if(response.statusCode != 200) {
         EasyLoading.showToast("网络错误");
-        return;
+        return handler.next(response);
       }
       final code = response.data['code'] as int;
       if(code == 401) {
         AuthService.logout();
       }
+      return handler.next(response);
     }
   ));
   return request;
@@ -34,7 +35,7 @@ class Request {
       return _response(responseData.data);
     }on DioError catch (e) {
       print("error");
-      print(e.response);
+      // print(e.response);
       return ResponseMap(403, "Server", {});
     }
   }
@@ -54,6 +55,7 @@ class Request {
       var responseMap = ResponseMap.formJson(json);
       return responseMap;
     } catch (e) {
+      print("error");
       print(e.toString());
       return ResponseMap(403, "Server", {});
     }

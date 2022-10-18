@@ -16,6 +16,31 @@ class Apis {
     return response;
   }
 
+  static Future<ResponseMap> registerApi(Map<String, String> params) async {
+    final String idKey = await AuthService.getAuthKey();
+    const String url = "/v1/users";
+    params.addAll({
+      "key": key ,
+      "action": 'add',
+    });
+    final ResponseMap response;
+    final LoginUser result;
+    response = await Request.post(url, params);
+    return response;
+  }
+
+  static Future<ResponseMap> resetPasswordApi(Map<String, String> params) async {
+    const String url = "/v1/users";
+    params.addAll({
+      "key": key ,
+      "action": 'reset',
+    });
+    final ResponseMap response;
+    final LoginUser result;
+    response = await Request.post(url, params);
+    return response;
+  }
+
   static Future<List<NoteItem>> getListApi(Map<String, dynamic> params) async {
     final String idKey = await AuthService.getAuthKey();
     final String url = "/v1/data/$idKey";

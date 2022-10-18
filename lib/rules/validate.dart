@@ -14,6 +14,18 @@ class Validate {
     return null;
   }
 
+  dynamic validateName(String? value) {
+    if (value == null || value.isEmpty) {
+      return '用户名称不要为空';
+    }
+
+    if (value.length < 1 || value.length > 16) {
+      return '用户名称请保持在 1~16 ';
+    }
+
+    return null;
+  }
+
   dynamic validatePassword(String? value) {
     if (value == null || value.isEmpty) {
       return '密码不要为空';
@@ -23,6 +35,18 @@ class Validate {
       return '密码长度请保持在 6~16 ';
     }
 
+    return null;
+  }
+
+  dynamic validateConfirmPassword(String? value, String? password) {
+    final message = validatePassword(value);
+    if(message != null) {
+      return message;
+    }
+
+    if(value != password) {
+      return "确认密码和密码输入不一致";
+    }
     return null;
   }
 

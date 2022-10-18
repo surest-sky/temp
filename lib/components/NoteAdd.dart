@@ -41,7 +41,6 @@ class _NoteAddState extends State<NoteAdd> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print(widget.editItem);
   }
 
   @override

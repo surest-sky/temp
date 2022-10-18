@@ -105,7 +105,6 @@ class NoteService {
     }
     params.addAll({"tags": tags.map((e) => "#$e").join() });
     params.addAll({"remark": remark});
-    print(params);
     return await Apis.submitApi(params);
   }
 

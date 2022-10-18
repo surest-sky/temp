@@ -6,6 +6,7 @@ import '../../http/apis.dart';
 import '../../models/LoginUser.dart';
 import '../../rules/validate.dart';
 import '../../services/AuthService.dart';
+import 'ForgetPasswordPage.dart';
 import 'RegisterPage.dart';
 import 'package:kwh/widgets/custom_button.dart';
 import 'package:kwh/widgets/custom_formfield.dart';
@@ -23,7 +24,9 @@ class _NewLoginPageState extends State<NewLoginPage> {
   final _phoneController = TextEditingController(text: "18270952773");
   final _passwordController = TextEditingController(text: "123456");
   final _verifyCodeController = TextEditingController(text: "123456");
+
   String get phone => _phoneController.text.trim();
+
   String get password => _passwordController.text.trim();
 
   bool _passwordLogin = true;
@@ -35,45 +38,29 @@ class _NewLoginPageState extends State<NewLoginPage> {
   Widget build(BuildContext context) {
     return Container(
       color: AppColors.appPrimaryColor,
-      padding: EdgeInsets.only(top: MediaQuery
-          .of(context)
-          .padding
-          .top),
+      padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
       child: Stack(
         children: [
           Container(
-            height: MediaQuery
-                .of(context)
-                .size
-                .height,
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
           ),
           CustomHeader(
             text: '登录',
             onTap: () {
               Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const RegisterPage()));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const RegisterPage(),
+                ),
+              );
             },
           ),
           Positioned(
-            top: MediaQuery
-                .of(context)
-                .size
-                .height * 0.08,
+            top: MediaQuery.of(context).size.height * 0.08,
             child: Container(
-              height: MediaQuery
-                  .of(context)
-                  .size
-                  .height * 0.9,
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width,
+              height: MediaQuery.of(context).size.height * 0.9,
+              width: MediaQuery.of(context).size.width,
               decoration: const BoxDecoration(
                 color: AppColors.whiteshade,
                 borderRadius: BorderRadius.only(
@@ -88,15 +75,9 @@ class _NewLoginPageState extends State<NewLoginPage> {
                   children: [
                     Container(
                       height: 200,
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width * 0.8,
+                      width: MediaQuery.of(context).size.width * 0.8,
                       margin: EdgeInsets.only(
-                          left: MediaQuery
-                              .of(context)
-                              .size
-                              .width * 0.09),
+                          left: MediaQuery.of(context).size.width * 0.09),
                       child: Image.asset("assets/images/login.png"),
                     ),
                     const SizedBox(
@@ -128,7 +109,14 @@ class _NewLoginPageState extends State<NewLoginPage> {
                             horizontal: 4,
                           ),
                           child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const ForgetPassword(),
+                                ),
+                              );
+                            },
                             child: Text(
                               "忘记密码 ?",
                               style: TextStyle(
@@ -198,12 +186,7 @@ class _NewLoginPageState extends State<NewLoginPage> {
       textInputType: TextInputType.text,
       hintText: "6 ~ 12 个字符串",
       obsecureText: _hiddenPassword,
-      suffixIcon: IconButton(
-        icon: Icon(_hiddenPassword ? Icons.visibility : Icons.visibility_off),
-        onPressed: () {
-          setState(() => _hiddenPassword = !_hiddenPassword);
-        },
-      ),
+      suffixIcon: passwordVisible(),
       controller: _passwordController,
       validator: (value) => _validate.validatePassword(value),
     );
@@ -213,17 +196,13 @@ class _NewLoginPageState extends State<NewLoginPage> {
     return Row(children: [
       Expanded(
         child: CustomFormField(
-
           headingText: "请输入验证码",
           maxLines: 1,
           textInputAction: TextInputAction.done,
           textInputType: TextInputType.text,
           hintText: "验证码",
           obsecureText: false,
-          suffixIcon: IconButton(
-            icon: const Icon(Icons.developer_mode),
-            onPressed: () {},
-          ),
+          suffixIcon: passwordVisible(),
           controller: _verifyCodeController,
           validator: (value) => _validate.validateCode(value),
         ),
@@ -231,7 +210,7 @@ class _NewLoginPageState extends State<NewLoginPage> {
       Container(
         margin: const EdgeInsets.only(top: 30, right: 24),
         width: 100,
-        child: VerifyButton(send: verifySend),
+        child: VerifyButton(send: verifySend, text: "获取验证码",),
       )
     ]);
   }
@@ -249,12 +228,11 @@ class _NewLoginPageState extends State<NewLoginPage> {
       'pw': password,
       'sms_code': code,
     };
-    print(queryParams);
     EasyLoading.show(status: '登录中...');
     final response = await Apis.loginApi(queryParams).whenComplete(() {
       EasyLoading.dismiss();
     });
-    if(response.code != 200) {
+    if (response.code != 200) {
       EasyLoading.showError(response.message);
       return;
     }
@@ -263,15 +241,24 @@ class _NewLoginPageState extends State<NewLoginPage> {
     Navigator.pushReplacementNamed(context, "appPage");
   }
 
-  Future<bool> verifySend() async{
+  Future<bool> verifySend() async {
     final phone = _phoneController.text;
     final response = await Apis.sendVerifyCode(phone);
-    if(response.code != 200) {
+    if (response.code != 200) {
       EasyLoading.showToast("服务异常,请稍后重试");
       return false;
     }
 
     return true;
+  }
+
+  Widget passwordVisible() {
+    return IconButton(
+      icon: Icon(_hiddenPassword ? Icons.visibility : Icons.visibility_off),
+      onPressed: () {
+        setState(() => _hiddenPassword = !_hiddenPassword);
+      },
+    );
   }
 
   @override
