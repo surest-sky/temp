@@ -30,10 +30,7 @@ class _ItemWebViewPageState extends State<ItemWebViewPage> {
 
   @override
   Widget build(BuildContext context) {
-    final itemView = ModalRoute
-        .of(context)!
-        .settings
-        .arguments as ItemView;
+    final itemView = ModalRoute.of(context)!.settings.arguments as ItemView;
     String title = itemView.title;
     if (title.length > 10) {
       title = title.substring(0, 10) + '...';

@@ -30,7 +30,7 @@ class _NoteAddState extends State<NoteAdd> {
   List<String> tags = [];
 
   loadData() {
-    if(widget.editItem == null) return;
+    if (widget.editItem == null) return;
     setState(() {
       _textEditingController.text = widget.editItem?.fullText ?? "";
       _remarkEditingController.text = widget.editItem?.remark ?? "";
@@ -100,7 +100,9 @@ class _NoteAddState extends State<NoteAdd> {
             ),
             Expanded(
               child: TextField(
-                decoration: CustomStyle.getTextFieldDecoration('请输入或粘贴网址 https://...', padding: 15),
+                decoration: CustomStyle.getTextFieldDecoration(
+                    '请输入或粘贴网址 https://...',
+                    padding: 15),
                 controller: _textEditingController,
                 maxLines: 20,
                 onEditingComplete: () {},
@@ -156,7 +158,8 @@ class _NoteAddState extends State<NoteAdd> {
       return;
     }
 
-    await service.submit(text, type: widget.type, tags: tags, remark: widget.editItem?.remark ?? "");
+    await service.submit(text,
+        type: widget.type, tags: tags, remark: widget.editItem?.remark ?? "");
     EasyLoading.showToast("提交成功");
     _textEditingController.clear();
     EasyLoading.dismiss();

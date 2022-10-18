@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'dart:io';
 
@@ -11,10 +10,12 @@ mixin ImageAction {
   late final String _imagePath;
   late final String _imgBase64;
 
-  imageSelect({required Function(String _path, String _base64) complete,}) async {
+  imageSelect({
+    required Function(String _path, String _base64) complete,
+  }) async {
     final ImagePicker _picker = ImagePicker();
     final XFile? _tempImage =
-    await _picker.pickImage(source: ImageSource.gallery);
+        await _picker.pickImage(source: ImageSource.gallery);
     if (_tempImage != null) {
       _imagePath = _tempImage.path;
       var _imageFile = File(_imagePath);

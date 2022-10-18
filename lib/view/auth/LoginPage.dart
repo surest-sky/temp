@@ -210,7 +210,10 @@ class _NewLoginPageState extends State<NewLoginPage> {
       Container(
         margin: const EdgeInsets.only(top: 30, right: 24),
         width: 100,
-        child: VerifyButton(send: verifySend, text: "获取验证码",),
+        child: VerifyButton(
+          send: verifySend,
+          text: "获取验证码",
+        ),
       )
     ]);
   }

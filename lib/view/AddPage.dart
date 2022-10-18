@@ -28,7 +28,6 @@ class _AddPageState extends State<AddPage> with SingleTickerProviderStateMixin {
     FocusManager.instance.primaryFocus?.unfocus();
   }
 
-
   @override
   void initState() {
     super.initState();

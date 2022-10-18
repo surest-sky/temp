@@ -9,7 +9,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class PrefPage extends StatefulWidget {
   const PrefPage({Key? key}) : super(key: key);
 
@@ -59,7 +58,7 @@ class PrefPageState extends State<PrefPage> {
                     } else {
                       return Text(
                         'Button tapped ${snapshot.data} time${snapshot.data == 1 ? '' : 's'}.\n\n'
-                            'This should persist across restarts.',
+                        'This should persist across restarts.',
                       );
                     }
                 }

@@ -16,8 +16,8 @@ class UserConfig {
     uId = json['u_id'] ?? "";
     paas = json['paas'] ?? "";
     val = json['val'] ?? "";
-    final _status = json['status'] ?? "" ;
-    final _is_expire = json['is_expire'] ?? "" ;
+    final _status = json['status'] ?? "";
+    final _is_expire = json['is_expire'] ?? "";
     status = _status == "off";
     isExpire = _is_expire == "no";
     remark = json['remark'] ?? "";

@@ -91,7 +91,10 @@ class NoteService {
     return _list;
   }
 
-  Future<ResponseMap> submit(String text, {String? type, required List<String> tags, required String remark}) async {
+  Future<ResponseMap> submit(String text,
+      {String? type,
+      required List<String> tags,
+      required String remark}) async {
     final Map<String, dynamic> params = {"action": "push"};
     // 检查是否为url
     if (type == null) {
@@ -103,7 +106,7 @@ class NoteService {
     } else {
       params.addAll({type: text});
     }
-    params.addAll({"tags": tags.map((e) => "#$e").join() });
+    params.addAll({"tags": tags.map((e) => "#$e").join()});
     params.addAll({"remark": remark});
     return await Apis.submitApi(params);
   }

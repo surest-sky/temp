@@ -62,7 +62,7 @@ class NoteItem {
     return map;
   }
 
- String _convertFormatDate(int _date) {
+  String _convertFormatDate(int _date) {
     final _dt = DateTime.fromMillisecondsSinceEpoch(_date * 1000);
     return formatDate(_dt, [yyyy, '-', mm, '-', dd]);
   }

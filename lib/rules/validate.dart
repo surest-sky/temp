@@ -40,11 +40,11 @@ class Validate {
 
   dynamic validateConfirmPassword(String? value, String? password) {
     final message = validatePassword(value);
-    if(message != null) {
+    if (message != null) {
       return message;
     }
 
-    if(value != password) {
+    if (value != password) {
       return "确认密码和密码输入不一致";
     }
     return null;

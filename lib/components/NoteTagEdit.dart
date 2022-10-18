@@ -6,7 +6,8 @@ class NoteTagEdit extends StatefulWidget {
   final List<String> tags;
   final Function(List<String>) complete;
 
-  const NoteTagEdit({Key? key, required this.tags, required this.complete}) : super(key: key);
+  const NoteTagEdit({Key? key, required this.tags, required this.complete})
+      : super(key: key);
 
   @override
   State<NoteTagEdit> createState() => _NoteTagEditState();
@@ -37,7 +38,9 @@ class _NoteTagEditState extends State<NoteTagEdit> {
           "标签:",
           style: TextStyle(color: Colors.grey),
         ),
-        const SizedBox(width: 5,),
+        const SizedBox(
+          width: 5,
+        ),
         Expanded(
           child: Wrap(
             alignment: WrapAlignment.start,

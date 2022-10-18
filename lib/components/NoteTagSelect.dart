@@ -11,7 +11,8 @@ class NoteTagSelect extends StatefulWidget {
   final List<String> tags;
   final Function(List<String>) submit;
 
-  const NoteTagSelect({Key? key, required this.tags, required this.submit}) : super(key: key);
+  const NoteTagSelect({Key? key, required this.tags, required this.submit})
+      : super(key: key);
 
   @override
   State<NoteTagSelect> createState() => _NoteTagSelectState();
@@ -43,17 +44,17 @@ class _NoteTagSelectState extends State<NoteTagSelect> {
   }
 
   _addTag(String tag) {
-    if(_values.contains(tag)) {
+    if (_values.contains(tag)) {
       EasyLoading.showToast("标签已添加过啦");
       return;
     }
 
-    if(tag.length >= 8) {
+    if (tag.length >= 8) {
       EasyLoading.showToast("标签长度最长为8个字符喔");
       return;
     }
 
-    if(_values.length >= 5) {
+    if (_values.length >= 5) {
       EasyLoading.showToast("最多添加5个标签喔");
       return;
     }

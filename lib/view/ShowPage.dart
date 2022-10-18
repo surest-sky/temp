@@ -102,7 +102,10 @@ class _ShowPageState extends State<ShowPage> {
             expand: true,
             context: context,
             backgroundColor: Colors.transparent,
-            builder: (context) => const Padding(padding: EdgeInsets.all(10), child: TextAddPage(),),
+            builder: (context) => const Padding(
+              padding: EdgeInsets.all(10),
+              child: TextAddPage(),
+            ),
           );
         }
       },

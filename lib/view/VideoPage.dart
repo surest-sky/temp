@@ -80,10 +80,12 @@ class _VideoPageState extends State<VideoPage> {
                       },
                       navigationDelegate: (NavigationRequest request) {
                         final url = request.url;
-                        if(url.startsWith('https://www.iqiyi.com/app/register')) {
+                        if (url
+                            .startsWith('https://www.iqiyi.com/app/register')) {
                           return NavigationDecision.prevent;
                         }
-                        if(url.startsWith('https://m.iqiyi.com/') || url.startsWith('https://www.iqiyi.com') ) {
+                        if (url.startsWith('https://m.iqiyi.com/') ||
+                            url.startsWith('https://www.iqiyi.com')) {
                           return NavigationDecision.navigate;
                         }
                         return NavigationDecision.prevent;

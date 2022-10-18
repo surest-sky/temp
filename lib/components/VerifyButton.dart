@@ -7,7 +7,8 @@ class VerifyButton extends StatefulWidget {
   final Function send;
   final String text;
 
-  const VerifyButton({Key? key, required this.send, required this.text}) : super(key: key);
+  const VerifyButton({Key? key, required this.send, required this.text})
+      : super(key: key);
 
   @override
   State<VerifyButton> createState() => _VerifyButtonState();

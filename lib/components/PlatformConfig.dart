@@ -95,7 +95,7 @@ class _PlatformConfigState extends State<PlatformConfig> {
                 const Padding(padding: EdgeInsets.only(left: 10)),
                 DropdownButton<String>(
                   value:
-                  _config.paas.isEmpty ? platformList.first : _config.paas,
+                      _config.paas.isEmpty ? platformList.first : _config.paas,
                   icon: const Icon(Icons.expand_more),
                   elevation: 16,
                   style: const TextStyle(color: Colors.deepPurple),
@@ -122,40 +122,40 @@ class _PlatformConfigState extends State<PlatformConfig> {
             const Padding(padding: EdgeInsets.only(top: 10)),
             _config.paas == "bilibili_favorites"
                 ? SizedBox(
-              child: Column(
-                children: [
-                  const Padding(padding: EdgeInsets.only(top: 10)),
-                  Row(
+                    child: Column(
+                      children: [
+                        const Padding(padding: EdgeInsets.only(top: 10)),
+                        Row(
+                          children: [
+                            label("收藏夹ID"),
+                            const Padding(padding: EdgeInsets.only(left: 10)),
+                            Expanded(child: formItem("请输入", 'val', _config.val))
+                          ],
+                        ),
+                        const Padding(padding: EdgeInsets.only(top: 10)),
+                        Row(
+                          children: [
+                            label("SESSDATA"),
+                            const Padding(padding: EdgeInsets.only(left: 10)),
+                            Expanded(
+                              child: formItem(
+                                "请输入",
+                                'sessdata',
+                                _config.sessdata,
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  )
+                : Row(
                     children: [
-                      label("收藏夹ID"),
+                      label(getLabel()),
                       const Padding(padding: EdgeInsets.only(left: 10)),
                       Expanded(child: formItem("请输入", 'val', _config.val))
                     ],
                   ),
-                  const Padding(padding: EdgeInsets.only(top: 10)),
-                  Row(
-                    children: [
-                      label("SESSDATA"),
-                      const Padding(padding: EdgeInsets.only(left: 10)),
-                      Expanded(
-                        child: formItem(
-                          "请输入",
-                          'sessdata',
-                          _config.sessdata,
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            )
-                : Row(
-              children: [
-                label(getLabel()),
-                const Padding(padding: EdgeInsets.only(left: 10)),
-                Expanded(child: formItem("请输入", 'val', _config.val))
-              ],
-            ),
             const Padding(padding: EdgeInsets.only(top: 10)),
             Row(
               children: [

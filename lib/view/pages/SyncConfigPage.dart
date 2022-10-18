@@ -123,35 +123,41 @@ class _SyncConfigPageState extends State<SyncConfigPage> {
         actions: [
           TextButton(
             onPressed: _action,
-            child: const Text("新建", style: TextStyle(color: Colors.white, fontSize: 18,),),
+            child: const Text(
+              "新建",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+              ),
+            ),
           ),
         ],
       ),
       body: _configs.length == 0
-            ? Container(
-                child: RefreshIndicator(
-                  key: _refreshIndicatorKey,
-                  onRefresh: _initUser,
-                  child: ListView.builder(
-                    itemCount: 1,
-                    itemBuilder: (context, index) {
-                      return ListEmpty();
-                    },
-                  ),
-                ),
-              )
-            : Container(
-                child: RefreshIndicator(
-                  key: _refreshIndicatorKey,
-                  onRefresh: _initUser,
-                  child: ListView.builder(
-                    itemCount: _configs.length,
-                    itemBuilder: (context, index) {
-                      return platformItem(_configs[index], index);
-                    },
-                  ),
+          ? Container(
+              child: RefreshIndicator(
+                key: _refreshIndicatorKey,
+                onRefresh: _initUser,
+                child: ListView.builder(
+                  itemCount: 1,
+                  itemBuilder: (context, index) {
+                    return ListEmpty();
+                  },
                 ),
               ),
+            )
+          : Container(
+              child: RefreshIndicator(
+                key: _refreshIndicatorKey,
+                onRefresh: _initUser,
+                child: ListView.builder(
+                  itemCount: _configs.length,
+                  itemBuilder: (context, index) {
+                    return platformItem(_configs[index], index);
+                  },
+                ),
+              ),
+            ),
     );
   }
 

@@ -5,9 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   test('获取Tags', () async {
-    SharedPreferences.setMockInitialValues({
-      "authToken": '16641Zg1gEdHMzo78119'
-    });
+    SharedPreferences.setMockInitialValues(
+        {"authToken": '16641Zg1gEdHMzo78119'});
     // TestWidgetsFlutterBinding.ensureInitialized();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final service = NoteService();
@@ -20,9 +19,8 @@ void main() {
   });
 
   test('获取TagsList', () async {
-    SharedPreferences.setMockInitialValues({
-      "authToken": '16641Zg1gEdHMzo78119'
-    });
+    SharedPreferences.setMockInitialValues(
+        {"authToken": '16641Zg1gEdHMzo78119'});
     // TestWidgetsFlutterBinding.ensureInitialized();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final service = NoteService();

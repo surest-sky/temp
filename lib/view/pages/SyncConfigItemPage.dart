@@ -3,7 +3,6 @@ import 'package:kwh/models/UserConfig.dart';
 
 import '../../components/PlatformConfig.dart';
 
-
 class SyncConfigItemPage extends StatefulWidget {
   final UserConfig? config;
   const SyncConfigItemPage({Key? key, this.config}) : super(key: key);
@@ -26,4 +25,3 @@ class _SyncConfigItemPageState extends State<SyncConfigItemPage> {
     );
   }
 }
-

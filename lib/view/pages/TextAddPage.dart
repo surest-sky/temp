@@ -80,7 +80,8 @@ class _TextAddPageState extends State<TextAddPage> {
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height - MediaQuery.of(context).viewInsets.bottom;
+    final height = MediaQuery.of(context).size.height -
+        MediaQuery.of(context).viewInsets.bottom;
     return Container(
       color: Colors.white,
       padding: EdgeInsets.all(10),

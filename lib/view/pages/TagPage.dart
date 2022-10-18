@@ -80,9 +80,7 @@ class _TagPageState extends State<TagPage> with SingleTickerProviderStateMixin {
   }
 
   List<Widget> _buildActions(context) {
-    return <Widget>[
-      _buildPopupMenuButton(context)
-    ];
+    return <Widget>[_buildPopupMenuButton(context)];
   }
 
   String colorString(Color color) {

@@ -87,60 +87,62 @@ class _ImageAddPageState extends State<ImageAddPage> {
       margin: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: Container(
         padding: const EdgeInsets.only(top: 0, right: 20, left: 20, bottom: 20),
-        child: Column(children: [
-          SizedBox(
-            height: 50,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text(
-                    "取消",
-                    style: TextStyle(color: Colors.grey),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 50,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                      "取消",
+                      style: TextStyle(color: Colors.grey),
+                    ),
                   ),
-                ),
-                Text(
-                  CustomModule.noteTitle(NoteType.ocr),
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                GFButton(
-                  size: GFSize.SMALL,
-                  onPressed: () => _submitOcr(),
-                  child: const Text("保存"),
-                )
-              ],
-            ),
-          ),
-          DottedBorder(
-            color: Colors.black26,
-            strokeWidth: 1,
-            child: InkWell(
-              onTap: _imageSelect,
-              child: Container(
-                width: width,
-                height: height - 100,
-                child: _imagePath.isNotEmpty
-                    ? Image.asset(
-                  _imagePath,
-                )
-                    : Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(Icons.upload),
-                    Text(
-                      "图片上传",
-                      style: TextStyle(fontSize: 18),
-                    )
-                  ],
-                ),
+                  Text(
+                    CustomModule.noteTitle(NoteType.ocr),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  GFButton(
+                    size: GFSize.SMALL,
+                    onPressed: () => _submitOcr(),
+                    child: const Text("保存"),
+                  )
+                ],
               ),
             ),
-          )
-        ],),
+            DottedBorder(
+              color: Colors.black26,
+              strokeWidth: 1,
+              child: InkWell(
+                onTap: _imageSelect,
+                child: Container(
+                  width: width,
+                  height: height - 100,
+                  child: _imagePath.isNotEmpty
+                      ? Image.asset(
+                          _imagePath,
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Icon(Icons.upload),
+                            Text(
+                              "图片上传",
+                              style: TextStyle(fontSize: 18),
+                            )
+                          ],
+                        ),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

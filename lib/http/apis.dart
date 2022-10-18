@@ -20,7 +20,7 @@ class Apis {
     final String idKey = await AuthService.getAuthKey();
     const String url = "/v1/users";
     params.addAll({
-      "key": key ,
+      "key": key,
       "action": 'add',
     });
     final ResponseMap response;
@@ -29,10 +29,11 @@ class Apis {
     return response;
   }
 
-  static Future<ResponseMap> resetPasswordApi(Map<String, String> params) async {
+  static Future<ResponseMap> resetPasswordApi(
+      Map<String, String> params) async {
     const String url = "/v1/users";
     params.addAll({
-      "key": key ,
+      "key": key,
       "action": 'reset',
     });
     final ResponseMap response;
@@ -47,7 +48,7 @@ class Apis {
     final ResponseMap response;
     final List<NoteItem> result = [];
     response = await Request.post(url, params);
-    if(response.data.isEmpty) {
+    if (response.data.isEmpty) {
       return result;
     }
 
@@ -60,13 +61,14 @@ class Apis {
     return result;
   }
 
-  static Future<List<NoteItem>> getLastListApi(Map<String, dynamic> params) async {
+  static Future<List<NoteItem>> getLastListApi(
+      Map<String, dynamic> params) async {
     final String idKey = await AuthService.getAuthKey();
     final String url = "/v1/data/$idKey";
     final ResponseMap response;
     final List<NoteItem> result = [];
     response = await Request.post(url, params);
-    if(response.data.isEmpty) {
+    if (response.data.isEmpty) {
       return result;
     }
 
@@ -112,24 +114,16 @@ class Apis {
     final String idKey = await AuthService.getAuthKey();
     final String url = "/v1/data/$idKey";
     final ResponseMap response;
-    final params = {
-      "action": "del",
-      "dataid": dataid
-    };
+    final params = {"action": "del", "dataid": dataid};
     response = await Request.post(url, params);
     return response;
   }
-
 
   static Future<ResponseMap> updateApi(String dataid, String text) async {
     final String idKey = await AuthService.getAuthKey();
     final String url = "/v1/data/note/$dataid";
     final ResponseMap response;
-    final params = {
-      "action": "update",
-      "idkey": idKey,
-      "text": text
-    };
+    final params = {"action": "update", "idkey": idKey, "text": text};
     response = await Request.post(url, params);
     return response;
   }
@@ -215,5 +209,4 @@ class Apis {
     response = await Request.post(url, params);
     return response;
   }
-
 }

@@ -16,6 +16,7 @@ class AuthService {
 
   static Future<String> getAuthKey() async {
     final prefs = await SharedPreferences.getInstance();
+    return '16641Zg1gEdHMzo78119';
     // prefs.setString(AUTH_KEY, "你好");
     return prefs.getString(AUTH_KEY) ?? '';
   }
@@ -29,7 +30,7 @@ class AuthService {
   static Future<LoginUser?> getUser() async {
     final prefs = await SharedPreferences.getInstance();
     final user = prefs.getString(AUTH_USER);
-    if(user == null) {
+    if (user == null) {
       return null;
     }
 

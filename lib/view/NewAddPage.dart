@@ -50,7 +50,8 @@ class _NewAddPageState extends State<NewAddPage>
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: <Widget>[
-        CustomWidget.buildSliverAppBar("笔记", leading: const SizedBox(height: 1)),
+        CustomWidget.buildSliverAppBar("笔记",
+            leading: const SizedBox(height: 1)),
         _buildSliverFixedExtentList()
       ],
     );
@@ -73,7 +74,7 @@ class _NewAddPageState extends State<NewAddPage>
   }
 
   Widget _moduleItem(int index) {
-    if(index == 0) {
+    if (index == 0) {
       return _noteMoule();
     }
     return _platformMoule();

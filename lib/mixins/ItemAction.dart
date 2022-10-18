@@ -29,7 +29,8 @@ mixin ItemAction {
       return;
     }
 
-    await service.submit(text, tags: editItem?.tags ?? [], remark: editItem?.remark ?? "");
+    await service.submit(text,
+        tags: editItem?.tags ?? [], remark: editItem?.remark ?? "");
     EasyLoading.showToast("提交成功");
     _textEditingController.clear();
     EasyLoading.dismiss();

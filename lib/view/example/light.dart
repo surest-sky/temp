@@ -8,7 +8,7 @@ class LightPage extends StatelessWidget {
     if (Theme.of(context).platform == TargetPlatform.android) {
       // android 平台
       SystemUiOverlayStyle _style =
-      SystemUiOverlayStyle(statusBarColor: Colors.transparent);
+          SystemUiOverlayStyle(statusBarColor: Colors.transparent);
       SystemChrome.setSystemUIOverlayStyle(_style);
     }
     return MaterialApp(

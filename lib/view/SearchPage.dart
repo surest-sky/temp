@@ -49,15 +49,15 @@ class _SearchPageState extends State<SearchPage> with ItemAction {
 
   updateList(ListActionEnum action, NoteItem? item) {
     final List<NoteItem> _list = [];
-    if(action == ListActionEnum.delete) {
+    if (action == ListActionEnum.delete) {
       _searchList.forEach((NoteItem _item) {
-        if(_item.dataid != item!.dataid) {
+        if (_item.dataid != item!.dataid) {
           _list.add(_item);
         }
       });
-    }else if(action == ListActionEnum.update) {
+    } else if (action == ListActionEnum.update) {
       _searchList.forEach((NoteItem _item) {
-        if(_item.dataid == item!.dataid) {
+        if (_item.dataid == item!.dataid) {
           _item = item;
         }
         _list.add(_item);
@@ -87,7 +87,6 @@ class _SearchPageState extends State<SearchPage> with ItemAction {
     }
   }
 
-
   @override
   void initState() {
     super.initState();
@@ -109,7 +108,9 @@ class _SearchPageState extends State<SearchPage> with ItemAction {
           width: double.infinity,
           height: 40,
           decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(5)),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+          ),
           child: Center(
             child: TextField(
               textInputAction: TextInputAction.search,

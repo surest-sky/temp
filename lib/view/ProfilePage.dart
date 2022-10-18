@@ -42,7 +42,9 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         title: const Text("我的"),
         automaticallyImplyLeading: false,
-        leading: const SizedBox(child: Text(""),),
+        leading: const SizedBox(
+          child: Text(""),
+        ),
       ),
       body: _user.uId.isEmpty
           ? ListView(children: const [
@@ -150,7 +152,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   ),
                   child: Column(
-                    children:  [
+                    children: [
                       ListItem(
                         onTap: () {
                           Navigator.of(context).pushNamed("syncConfigPage");
@@ -163,7 +165,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                 size: 20,
                                 color: Colors.black87,
                               ),
-                              SizedBox(width: 5,),
+                              SizedBox(
+                                width: 5,
+                              ),
                               Text("同步管理"),
                             ],
                           ),
@@ -186,7 +190,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                 size: 20,
                                 color: Colors.black87,
                               ),
-                              SizedBox(width: 5,),
+                              SizedBox(
+                                width: 5,
+                              ),
                               Text("归档"),
                             ],
                           ),

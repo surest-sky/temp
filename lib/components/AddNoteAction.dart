@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class AddNoteAction extends StatelessWidget{
+class AddNoteAction extends StatelessWidget {
   AddNoteAction({Key? key}) : super(key: key);
   final TextEditingController _textEditingController =
-  TextEditingController(text: "");
+      TextEditingController(text: "");
 
   @override
   Widget build(BuildContext context) {

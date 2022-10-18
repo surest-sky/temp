@@ -188,7 +188,10 @@ class _ForgetPasswordState extends State<ForgetPassword> {
       Container(
         margin: const EdgeInsets.only(top: 30, right: 24),
         width: 100,
-        child: VerifyButton(send: verifySend, text: "获取验证码",),
+        child: VerifyButton(
+          send: verifySend,
+          text: "获取验证码",
+        ),
       )
     ]);
   }
@@ -218,8 +221,9 @@ class _ForgetPasswordState extends State<ForgetPassword> {
       return;
     }
 
-    final message = _validate.validateConfirmPassword(password, confirmPassword);
-    if(message != null) {
+    final message =
+        _validate.validateConfirmPassword(password, confirmPassword);
+    if (message != null) {
       EasyLoading.showToast(message);
       return;
     }

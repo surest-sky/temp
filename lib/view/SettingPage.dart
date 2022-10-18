@@ -262,7 +262,8 @@ class _SettingPageState extends State<SettingPage> with ImageAction {
                         AuthService.logout();
                         // Navigator.pushNamed(context, "loginPage");
                         Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(builder: (context) => const NewLoginPage()),
+                          MaterialPageRoute(
+                              builder: (context) => const NewLoginPage()),
                           (Route<dynamic> route) => false,
                         );
                       },

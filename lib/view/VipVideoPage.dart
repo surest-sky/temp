@@ -27,7 +27,7 @@ class _VipVideoPageState extends State<VipVideoPage> {
         child: WebView(
           initialUrl: 'https://jx.bozrc.com:4433/player/?url=${widget.url}',
           javascriptMode: JavascriptMode.unrestricted,
-          onWebViewCreated: (WebViewController webcontroller){
+          onWebViewCreated: (WebViewController webcontroller) {
             _controller = webcontroller;
           },
         ),
@@ -53,16 +53,15 @@ class _VipVideoPageState extends State<VipVideoPage> {
         ),
       ),
       onSelected: (e) async {
-        if(e == '浏览器打开') {
+        if (e == '浏览器打开') {
           _launchUrl(widget.url);
           return;
         }
-         _controller.reload();
+        _controller.reload();
       },
       onCanceled: () => print('onCanceled'),
     );
   }
-
 
   _launchUrl(String url) async {
     final Uri _url = Uri.parse(url);

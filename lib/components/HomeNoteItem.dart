@@ -22,7 +22,7 @@ class HomeNoteItem extends StatelessWidget with ItemAction {
   Widget _itemAction(String text, IconData icon) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: [ Icon(icon), Text(text)],
+      children: [Icon(icon), Text(text)],
     );
   }
 
@@ -60,7 +60,7 @@ class HomeNoteItem extends StatelessWidget with ItemAction {
           BottomSheetAction(
             title: _itemAction("编辑", Icons.mode_edit),
             onPressed: (context) {
-              if(item.url.isNotEmpty) {
+              if (item.url.isNotEmpty) {
                 EasyLoading.showToast("链接暂时未开放编辑");
                 return;
               }
@@ -70,9 +70,9 @@ class HomeNoteItem extends StatelessWidget with ItemAction {
           ),
           BottomSheetAction(
             title: _itemAction("删除", Icons.delete),
-            onPressed: (context) async{
+            onPressed: (context) async {
               Navigator.pop(context);
-              await deleteItem(context, item, (){
+              await deleteItem(context, item, () {
                 updateList(ListActionEnum.delete, item);
               });
             },
@@ -86,75 +86,74 @@ class HomeNoteItem extends StatelessWidget with ItemAction {
 
     String wellTitle(NoteItem item) {
       final title = item.title.replaceAll('\n', '');
-      if(item.type == NoteType.ocr) {
+      if (item.type == NoteType.ocr) {
         return "[图片] " + title;
       }
       return title;
     }
 
     return InkWell(
-        onTap: () {
-          Navigator.pushNamed(context, 'showPage', arguments: item.dataid);
-        },
-        child: Container(
-          color: Colors.white,
-          padding: const EdgeInsets.only(top: 10, right: 10, left: 10, bottom: 2),
-          // decoration: BoxDecoration(
-          //   borderRadius: BorderRadius.circular(8),
-          //   color: Colors.white,
-          //   boxShadow: const [
-          //     BoxShadow(
-          //       color: Colors.black12,
-          //       blurRadius: 5.0,
-          //     ),
-          //   ],
-          // ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                wellTitle(item),
-                textAlign: TextAlign.left,
-                style: const TextStyle(
-                  overflow: TextOverflow.ellipsis,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+      onTap: () {
+        Navigator.pushNamed(context, 'showPage', arguments: item.dataid);
+      },
+      child: Container(
+        color: Colors.white,
+        padding: const EdgeInsets.only(top: 10, right: 10, left: 10, bottom: 2),
+        // decoration: BoxDecoration(
+        //   borderRadius: BorderRadius.circular(8),
+        //   color: Colors.white,
+        //   boxShadow: const [
+        //     BoxShadow(
+        //       color: Colors.black12,
+        //       blurRadius: 5.0,
+        //     ),
+        //   ],
+        // ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              wellTitle(item),
+              textAlign: TextAlign.left,
+              style: const TextStyle(
+                overflow: TextOverflow.ellipsis,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const Padding(padding: EdgeInsets.only(bottom: 10)),
+            Text(
+              item.updatedAt,
+              textAlign: TextAlign.left,
+              style: const TextStyle(color: Colors.black45),
+            ),
+            const Padding(padding: EdgeInsets.only(bottom: 5)),
+            Text(
+              item.fullText.replaceAll('\n', ''),
+              textAlign: TextAlign.left,
+              style: const TextStyle(
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width - 100,
+                  child: UrlButton(item: item),
                 ),
-              ),
-
-              const Padding(padding: EdgeInsets.only(bottom: 10)),
-              Text(
-                item.updatedAt,
-                textAlign: TextAlign.left,
-                style: const TextStyle(color: Colors.black45),
-              ),
-              const Padding(padding: EdgeInsets.only(bottom: 5)),
-              Text(
-                item.fullText.replaceAll('\n', ''),
-                textAlign: TextAlign.left,
-                style: const TextStyle(
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width - 100,
-                    child: UrlButton(item: item),
+                SizedBox(
+                  width: 50,
+                  child: IconButton(
+                    onPressed: () => actionSheet(item),
+                    icon: const Icon(Icons.more_horiz),
                   ),
-                  SizedBox(
-                    width: 50,
-                    child: IconButton(
-                      onPressed: () => actionSheet(item),
-                      icon: const Icon(Icons.more_horiz),
-                    ),
-                  )
-                ],
-              )
-            ],
-          ),
+                )
+              ],
+            )
+          ],
         ),
+      ),
     );
   }
 }
