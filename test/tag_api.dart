@@ -1,8 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:kwh/models/NoteItem.dart';
-import 'package:kwh/models/LoginUser.dart';
 import 'package:kwh/models/TagChunkNoteItem.dart';
-import 'package:kwh/services/AuthService.dart';
 import 'package:kwh/services/NoteService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

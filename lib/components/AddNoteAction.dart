@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../mixins/ItemAction.dart';
-
 class AddNoteAction extends StatelessWidget{
   AddNoteAction({Key? key}) : super(key: key);
   final TextEditingController _textEditingController =

@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:easy_refresh/src/painter/paths_painter.dart';
+import 'package:flutter/material.dart';
 
 import '../../util/color_utils.dart';
 

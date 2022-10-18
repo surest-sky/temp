@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
+
+import 'package:flutter/material.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
-import 'package:kwh/themes/colors.dart';
 
 class VerifyButton extends StatefulWidget {
   final Function send;

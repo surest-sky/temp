@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:kwh/styles/app_colors.dart';
 import 'package:kwh/mixins/ImageAction.dart';
 import 'package:kwh/services/NoteService.dart';
-import 'package:kwh/view/auth/login.dart';
+import 'package:kwh/styles/app_colors.dart';
 
 import '../models/LoginUser.dart';
 import '../services/AuthService.dart';
-import 'package:flutter/services.dart';
-
 import 'auth/LoginPage.dart';
 
 class SettingPage extends StatefulWidget {

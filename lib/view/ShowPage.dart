@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:kwh/components/Skeleton.dart';
-import 'package:kwh/widgets/CustomWidget.dart';
 import 'package:kwh/http/response.dart';
 import 'package:kwh/models/NoteItem.dart';
 import 'package:kwh/services/NoteService.dart';
+import 'package:kwh/widgets/CustomWidget.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-import '../components/HomeItemSheet.dart';
 import './pages/TextAddPage.dart';
+import '../components/HomeItemSheet.dart';
 
 class ShowPage extends StatefulWidget {
   String dataId;

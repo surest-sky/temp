@@ -2,14 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:proste_indexed_stack/proste_indexed_stack.dart';
 import 'package:kwh/services/AuthService.dart';
-import 'AddPage.dart';
+import 'package:proste_indexed_stack/proste_indexed_stack.dart';
+import 'package:receive_sharing_intent/receive_sharing_intent.dart';
+
 import 'HomePage.dart';
 import 'NewAddPage.dart';
 import 'NewProfilePage.dart';
-import 'package:receive_sharing_intent/receive_sharing_intent.dart';
-import 'package:ripple_backdrop_animate_route/ripple_backdrop_animate_route.dart';
 
 class AppPage extends StatefulWidget {
   final Map? arguments;

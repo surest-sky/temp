@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kwh/models/NoteItem.dart';
 import 'package:kwh/models/ItemView.dart';
+import 'package:kwh/models/NoteItem.dart';
 
 class UrlButton extends StatelessWidget {
   final NoteItem item;

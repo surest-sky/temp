@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:kwh/models/LoginUser.dart';
 import 'package:kwh/services/AuthService.dart';
 import 'package:kwh/services/NoteService.dart';
-
 import 'package:kwh/widgets/list_item.dart';
 
 class ProfilePage extends StatefulWidget {

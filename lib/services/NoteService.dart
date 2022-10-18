@@ -1,14 +1,14 @@
+import 'dart:convert';
+
 import 'package:date_format/date_format.dart';
 import 'package:flutter/services.dart';
-import 'package:kwh/enums/NoteType.dart';
 import 'package:kwh/http/response.dart';
-import 'package:kwh/models/NoteItem.dart';
 import 'package:kwh/models/LoginUser.dart';
+import 'package:kwh/models/NoteItem.dart';
 import 'package:kwh/models/TagChunkNoteItem.dart';
 import 'package:kwh/models/UserConfig.dart';
 import 'package:kwh/services/AuthService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
 
 import '../http/apis.dart';
 

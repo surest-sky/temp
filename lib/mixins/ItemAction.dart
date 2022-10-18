@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:kwh/services/NoteService.dart';
 import 'package:kwh/models/NoteItem.dart';
+import 'package:kwh/services/NoteService.dart';
 
 mixin ItemAction {
   final TextEditingController _textEditingController =

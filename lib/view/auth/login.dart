@@ -1,16 +1,12 @@
+import 'package:drop_down_list/drop_down_list.dart';
 import 'package:drop_down_list/model/selected_list_item.dart';
 import 'package:flutter/material.dart';
-import 'package:drop_down_list/drop_down_list.dart';
 import 'package:flutter/services.dart';
-import 'package:kwh/models/LoginUser.dart';
-import 'package:kwh/services/AuthService.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
-import 'package:kwh/rules/validate.dart';
-import 'package:kwh/components/VerifyButton.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import '../../http/apis.dart';
+import 'package:kwh/components/VerifyButton.dart';
+import 'package:kwh/rules/validate.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);

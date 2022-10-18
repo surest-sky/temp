@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:kwh/models/NoteItem.dart';
-import '../components/HomeNoteItem.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:kwh/widgets/list_empty.dart';
-import 'package:kwh/mixins/ItemAction.dart';
 import 'package:kwh/enums/ListActionEnum.dart';
+import 'package:kwh/mixins/ItemAction.dart';
+import 'package:kwh/models/NoteItem.dart';
+import 'package:kwh/widgets/list_empty.dart';
+
+import '../components/HomeNoteItem.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);

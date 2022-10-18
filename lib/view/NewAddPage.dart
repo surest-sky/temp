@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kwh/components/NoteAdd.dart';
-import 'package:kwh/widgets/CustomWidget.dart';
 import 'package:kwh/enums/NoteType.dart';
+import 'package:kwh/widgets/CustomWidget.dart';
 import 'package:kwh/widgets/custom_list_item.dart';
+
 import './pages/ImageAddPage.dart';
 
 class NewAddPage extends StatefulWidget {

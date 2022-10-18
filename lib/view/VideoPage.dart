@@ -4,12 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:kwh/widgets/CustomStyle.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:kwh/widgets/CustomWidget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
-import 'package:kwh/widgets/CustomWidget.dart';
 
 class VideoPage extends StatefulWidget {
   const VideoPage({Key? key}) : super(key: key);

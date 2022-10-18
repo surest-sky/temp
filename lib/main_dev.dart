@@ -1,17 +1,12 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kwh/services/ShareService.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:kwh/view/AppPage.dart';
 import 'package:kwh/view/SearchPage.dart';
 import 'package:kwh/view/SettingPage.dart';
 import 'package:kwh/view/auth/login.dart';
 import 'package:kwh/view/auth/register.dart';
-import 'package:kwh/view/example/light.dart';
-import 'dart:async';
 import 'package:kwh/view/pages/ItemWebViewPage.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 void main() {
   EasyLoading.instance.indicatorType = EasyLoadingIndicatorType.ring;

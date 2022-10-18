@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:proste_indexed_stack/proste_indexed_stack.dart';
-import './pages/TextAddPage.dart';
+
 import './pages/ImageAddPage.dart';
-import 'package:flutter/services.dart';
+import './pages/TextAddPage.dart';
 
 class AddPage extends StatefulWidget {
   const AddPage({Key? key}) : super(key: key);

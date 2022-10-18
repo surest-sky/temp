@@ -1,10 +1,9 @@
 
+import 'dart:convert';
 import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:convert';
 
 import '../http/apis.dart';
 

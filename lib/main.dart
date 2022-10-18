@@ -1,7 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:kwh/styles/app_colors.dart';
 import 'package:kwh/view/AppPage.dart';
 import 'package:kwh/view/SearchPage.dart';
@@ -10,10 +9,8 @@ import 'package:kwh/view/ShowPage.dart';
 import 'package:kwh/view/VideoPage.dart';
 import 'package:kwh/view/VipVideoPage.dart';
 import 'package:kwh/view/auth/LoginPage.dart';
-import 'package:kwh/view/auth/login.dart';
 import 'package:kwh/view/auth/register.dart';
 import 'package:kwh/view/pages/ItemWebViewPage.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:kwh/view/pages/SyncConfigPage.dart';
 import 'package:kwh/view/pages/TagPage.dart';
 import 'package:kwh/view/pages/TagsManagerPage.dart';

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kwh/services/NoteService.dart';
-import 'package:receive_sharing_intent/receive_sharing_intent.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:kwh/services/NoteService.dart';
+import 'package:receive_sharing_intent/receive_sharing_intent.dart';
 
 class TextAddPage extends StatefulWidget {
   const TextAddPage({Key? key}) : super(key: key);

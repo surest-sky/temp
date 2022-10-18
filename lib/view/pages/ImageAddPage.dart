@@ -1,16 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:kwh/enums/NoteType.dart';
 import 'package:kwh/http/apis.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:kwh/services/NoteService.dart';
-
 import 'package:kwh/widgets//CustomModule.dart';
 
 class ImageAddPage extends StatefulWidget {
